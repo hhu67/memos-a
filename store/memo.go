@@ -60,10 +60,12 @@ type Memo struct {
 
 	// Domain specific fields
 	Content    string
+	Title      string
 	Visibility Visibility
 	Pinned     bool
 	Payload    *storepb.MemoPayload
 	SpaceID    *int32
+	FolderID   *int32
 
 	// Composed fields
 	ParentUID *string
@@ -83,6 +85,8 @@ type FindMemo struct {
 	// Domain specific fields
 	VisibilityList       []Visibility
 	CommentContextMemoID *int32
+	FolderID             *int32
+	TitleSearch          string
 	Access               *MemoAccessScope
 	ExcludeContent       bool
 	ExcludeComments      bool
@@ -146,11 +150,15 @@ type UpdateMemo struct {
 	UpdatedTs  *int64
 	RowStatus  *RowStatus
 	Content    *string
+	Title      *string
 	Visibility *Visibility
 	Pinned     *bool
 	Payload    *storepb.MemoPayload
 	SpaceID    *int32
 	ClearSpace bool
+	FolderID   *int32
+	// ClearFolder detaches the memo from its folder.
+	ClearFolder bool
 	// Policy is set by transport-facing author mutations. Drivers revalidate it
 	// in the same transaction as the update; nil preserves trusted internal and
 	// migration callers.

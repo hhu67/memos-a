@@ -45,6 +45,15 @@ function buildUpdateMask(
     mask.add("content");
     patch.content = state.content;
   }
+  const title = state.title.trim();
+  if (title !== prevMemo.title) {
+    mask.add("title");
+    patch.title = title;
+  }
+  if ((state.metadata.folder || undefined) !== (prevMemo.folder || undefined)) {
+    mask.add("folder");
+    patch.folder = state.metadata.folder ?? "";
+  }
   if (!isEqual(state.metadata.visibility, prevMemo.visibility)) {
     mask.add("visibility");
     patch.visibility = state.metadata.visibility;
@@ -73,7 +82,7 @@ function buildUpdateMask(
   }
 
   // Auto-update timestamp if content changed
-  if (["content", "attachments", "relations", "location"].some((key) => mask.has(key))) {
+  if (["content", "title", "folder", "attachments", "relations", "location"].some((key) => mask.has(key))) {
     mask.add("update_time");
   }
 
@@ -187,10 +196,12 @@ export const memoService = {
     }
     const memoData = create(MemoSchema, {
       content: state.content,
+      title: state.title.trim(),
       visibility: state.metadata.visibility,
       attachments: toAttachmentReferences(allAttachments),
       relations: state.metadata.relations,
       location: state.metadata.location,
+      folder: options.parentMemoName ? undefined : state.metadata.folder,
       createTime: state.timestamps.createTime ? timestampFromDate(state.timestamps.createTime) : undefined,
       updateTime: state.timestamps.updateTime ? timestampFromDate(state.timestamps.updateTime) : undefined,
       space: options.parentMemoName ? undefined : (options.space ?? state.metadata.space),
@@ -205,12 +216,14 @@ export const memoService = {
    * request). Returns only the fields the reducer's INIT_MEMO case consumes —
    * UI state (mode, loading flags, …) is owned by the reducer, not by memos.
    */
-  fromMemo(memo: Memo): Pick<EditorState, "content" | "metadata" | "timestamps"> {
+  fromMemo(memo: Memo): Pick<EditorState, "content" | "title" | "metadata" | "timestamps"> {
     return {
       content: memo.content,
+      title: memo.title,
       metadata: {
         visibility: memo.visibility,
         space: memo.space || undefined,
+        folder: memo.folder || undefined,
         attachments: memo.attachments,
         relations: memo.relations,
         location: memo.location,

@@ -191,7 +191,8 @@
     "selected-location": "Vybraná poloha",
     "choose-location": "Vyberte polohu",
     "unknown-error": "Neznáma chyba",
-    "error-occurred": "Vyskytla sa chyba"
+    "error-occurred": "Vyskytla sa chyba",
+    "folders": "Folders"
   },
   "locale-picker": {
     "no-language-feedback": "Jazyk sa nenašiel? Odoslať spätnú väzbu"
@@ -369,7 +370,9 @@
     "remove-location": "Odstrániť polohu",
     "recording-unsupported": "Tento prehliadač nepodporuje nahrávanie zvuku.",
     "microphone-denied": "Prístup k mikrofónu bol zamietnutý.",
-    "recording-failed": "Nahrávanie zvuku sa nepodarilo spustiť."
+    "recording-failed": "Nahrávanie zvuku sa nepodarilo spustiť.",
+    "title-placeholder": "Title (optional)",
+    "folder": "Folder"
   },
   "inbox": {
     "failed-to-load": "Nepodarilo sa načítať položku doručenej pošty",
@@ -1437,5 +1440,23 @@
     "back": "Späť o {{seconds}} sekúnd",
     "forward": "Dopredu o {{seconds}} sekúnd",
     "speed": "Rýchlosť prehrávania {{rate}}x"
+  },
+  "folder": {
+    "all": "All memos",
+    "none": "No folder",
+    "new": "New folder",
+    "new-subfolder": "New subfolder",
+    "rename": "Rename folder",
+    "rename-success": "Folder renamed",
+    "create-success": "Folder created",
+    "save-error": "Could not save the folder",
+    "delete-error": "Could not delete the folder",
+    "delete-title": "Delete this folder?",
+    "delete-description": "Memos in \"{{name}}\" and its subfolders are kept and moved out of the folder.",
+    "name": "Name",
+    "name-placeholder": "Folder name",
+    "empty": "No folders yet",
+    "load-error": "Could not load folders",
+    "loading": "Loading folders…"
   }
 }

@@ -191,7 +191,8 @@
     "selected-location": "Επιλεγμένη τοποθεσία",
     "choose-location": "Επιλέξτε τοποθεσία",
     "unknown-error": "Άγνωστο σφάλμα",
-    "error-occurred": "Παρουσιάστηκε σφάλμα"
+    "error-occurred": "Παρουσιάστηκε σφάλμα",
+    "folders": "Folders"
   },
   "locale-picker": {
     "no-language-feedback": "Δεν βρέθηκε η γλώσσα; Υποβολή σχολίων"
@@ -369,7 +370,9 @@
     "remove-location": "Αφαίρεση τοποθεσίας",
     "recording-unsupported": "Η εγγραφή ήχου δεν υποστηρίζεται σε αυτό το πρόγραμμα περιήγησης.",
     "microphone-denied": "Η άδεια χρήσης μικροφώνου απορρίφθηκε.",
-    "recording-failed": "Η έναρξη της εγγραφής ήχου απέτυχε."
+    "recording-failed": "Η έναρξη της εγγραφής ήχου απέτυχε.",
+    "title-placeholder": "Title (optional)",
+    "folder": "Folder"
   },
   "inbox": {
     "failed-to-load": "Η φόρτωση του στοιχείου των εισερχομένων απέτυχε",
@@ -1435,5 +1438,23 @@
     "back": "Πίσω {{seconds}} δευτερόλεπτα",
     "forward": "Μπροστά {{seconds}} δευτερόλεπτα",
     "speed": "Ταχύτητα αναπαραγωγής {{rate}}x"
+  },
+  "folder": {
+    "all": "All memos",
+    "none": "No folder",
+    "new": "New folder",
+    "new-subfolder": "New subfolder",
+    "rename": "Rename folder",
+    "rename-success": "Folder renamed",
+    "create-success": "Folder created",
+    "save-error": "Could not save the folder",
+    "delete-error": "Could not delete the folder",
+    "delete-title": "Delete this folder?",
+    "delete-description": "Memos in \"{{name}}\" and its subfolders are kept and moved out of the folder.",
+    "name": "Name",
+    "name-placeholder": "Folder name",
+    "empty": "No folders yet",
+    "load-error": "Could not load folders",
+    "loading": "Loading folders…"
   }
 }

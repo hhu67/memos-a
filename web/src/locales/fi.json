@@ -191,7 +191,8 @@
     "selected-location": "Valittu sijainti",
     "choose-location": "Valitse sijainti",
     "unknown-error": "Tuntematon virhe",
-    "error-occurred": "Tapahtui virhe"
+    "error-occurred": "Tapahtui virhe",
+    "folders": "Folders"
   },
   "locale-picker": {
     "no-language-feedback": "Eikö kieltä löydy? Lähetä palautetta"
@@ -369,7 +370,9 @@
     "remove-location": "Poista sijainti",
     "recording-unsupported": "Tämä selain ei tue äänen tallennusta.",
     "microphone-denied": "Mikrofonin käyttöoikeus evättiin.",
-    "recording-failed": "Äänen tallennuksen aloittaminen epäonnistui."
+    "recording-failed": "Äänen tallennuksen aloittaminen epäonnistui.",
+    "title-placeholder": "Title (optional)",
+    "folder": "Folder"
   },
   "inbox": {
     "failed-to-load": "Saapuneet-kansion kohteen lataaminen epäonnistui",
@@ -1435,5 +1438,23 @@
     "back": "{{seconds}} sekuntia taaksepäin",
     "forward": "{{seconds}} sekuntia eteenpäin",
     "speed": "Toistonopeus {{rate}}x"
+  },
+  "folder": {
+    "all": "All memos",
+    "none": "No folder",
+    "new": "New folder",
+    "new-subfolder": "New subfolder",
+    "rename": "Rename folder",
+    "rename-success": "Folder renamed",
+    "create-success": "Folder created",
+    "save-error": "Could not save the folder",
+    "delete-error": "Could not delete the folder",
+    "delete-title": "Delete this folder?",
+    "delete-description": "Memos in \"{{name}}\" and its subfolders are kept and moved out of the folder.",
+    "name": "Name",
+    "name-placeholder": "Folder name",
+    "empty": "No folders yet",
+    "load-error": "Could not load folders",
+    "loading": "Loading folders…"
   }
 }

@@ -396,6 +396,19 @@ func (s *APIService) UpdateMemo(ctx context.Context, request *apipb.UpdateMemoRe
 			update.Payload = nextMemo.Payload
 		} else if path == "pinned" {
 			update.Pinned = &request.Memo.Pinned
+		} else if path == "title" {
+			title := request.Memo.Title
+			update.Title = &title
+		} else if path == "folder" {
+			if request.Memo.Folder == nil || request.Memo.GetFolder() == "" {
+				update.ClearFolder = true
+			} else {
+				folder, err := s.resolveOwnedFolder(ctx, request.Memo.GetFolder(), user.ID)
+				if err != nil {
+					return nil, err
+				}
+				update.FolderID = &folder.ID
+			}
 		} else if path == "state" {
 			rowStatus := convertStateToStore(request.Memo.State)
 			update.RowStatus = &rowStatus

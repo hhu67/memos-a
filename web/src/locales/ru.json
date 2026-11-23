@@ -153,7 +153,8 @@
     "selected-location": "Выбранное местоположение",
     "choose-location": "Выберите местоположение",
     "unknown-error": "Неизвестная ошибка",
-    "error-occurred": "Произошла ошибка"
+    "error-occurred": "Произошла ошибка",
+    "folders": "Folders"
   },
   "locale-picker": {
     "no-language-feedback": "Язык не найден? Отправить отзыв"
@@ -331,7 +332,9 @@
     "remove-location": "Удалить местоположение",
     "recording-unsupported": "Этот браузер не поддерживает запись звука.",
     "microphone-denied": "Доступ к микрофону запрещён.",
-    "recording-failed": "Не удалось начать запись звука."
+    "recording-failed": "Не удалось начать запись звука.",
+    "title-placeholder": "Title (optional)",
+    "folder": "Folder"
   },
   "inbox": {
     "failed-to-load": "Не удалось загрузить элемент уведомления",
@@ -1437,5 +1440,23 @@
     "back": "Назад на {{seconds}} секунд",
     "forward": "Вперёд на {{seconds}} секунд",
     "speed": "Скорость воспроизведения {{rate}}x"
+  },
+  "folder": {
+    "all": "All memos",
+    "none": "No folder",
+    "new": "New folder",
+    "new-subfolder": "New subfolder",
+    "rename": "Rename folder",
+    "rename-success": "Folder renamed",
+    "create-success": "Folder created",
+    "save-error": "Could not save the folder",
+    "delete-error": "Could not delete the folder",
+    "delete-title": "Delete this folder?",
+    "delete-description": "Memos in \"{{name}}\" and its subfolders are kept and moved out of the folder.",
+    "name": "Name",
+    "name-placeholder": "Folder name",
+    "empty": "No folders yet",
+    "load-error": "Could not load folders",
+    "loading": "Loading folders…"
   }
 }

@@ -50,6 +50,20 @@ CREATE TABLE `space_member` (
 
 CREATE INDEX `idx_space_member_user_id` ON `space_member`(`user_id`, `space_id`);
 
+-- folder
+CREATE TABLE `folder` (
+  `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `uid` VARCHAR(256) NOT NULL UNIQUE,
+  `creator_id` INT NOT NULL,
+  `parent_id` INT DEFAULT NULL,
+  `name` VARCHAR(256) NOT NULL,
+  `created_ts` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_ts` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX `idx_folder_creator_id` ON `folder`(`creator_id`, `id`);
+CREATE INDEX `idx_folder_parent_id` ON `folder`(`parent_id`);
+
 -- memo
 CREATE TABLE `memo` (
   `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -59,14 +73,17 @@ CREATE TABLE `memo` (
   `updated_ts` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `row_status` VARCHAR(256) NOT NULL DEFAULT 'NORMAL',
   `content` TEXT NOT NULL,
+  `title` VARCHAR(512) NOT NULL DEFAULT '',
   `visibility` VARCHAR(256) NOT NULL DEFAULT 'PRIVATE',
   `pinned` BOOLEAN NOT NULL DEFAULT FALSE,
   `payload` JSON NOT NULL,
-  `space_id` INT DEFAULT NULL
+  `space_id` INT DEFAULT NULL,
+  `folder_id` INT DEFAULT NULL
 );
 
 CREATE INDEX `idx_memo_space_id` ON `memo`(`space_id`, `row_status`, `created_ts`, `id`);
 CREATE INDEX `idx_memo_creator_id` ON `memo`(`creator_id`);
+CREATE INDEX `idx_memo_folder_id` ON `memo`(`folder_id`, `row_status`, `created_ts`, `id`);
 
 -- memo_relation
 CREATE TABLE `memo_relation` (

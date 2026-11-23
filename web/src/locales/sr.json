@@ -191,7 +191,8 @@
     "selected-location": "Изабрана локација",
     "choose-location": "Изаберите локацију",
     "unknown-error": "Непозната грешка",
-    "error-occurred": "Дошло је до грешке"
+    "error-occurred": "Дошло је до грешке",
+    "folders": "Folders"
   },
   "locale-picker": {
     "no-language-feedback": "Језик није пронађен? Пошаљите повратне информације"
@@ -369,7 +370,9 @@
     "remove-location": "Уклони локацију",
     "recording-unsupported": "Овај прегледач не подржава снимање звука.",
     "microphone-denied": "Приступ микрофону је одбијен.",
-    "recording-failed": "Покретање снимања звука није успело."
+    "recording-failed": "Покретање снимања звука није успело.",
+    "title-placeholder": "Title (optional)",
+    "folder": "Folder"
   },
   "inbox": {
     "failed-to-load": "Учитавање ставке пријемног сандучета није успело",
@@ -1436,5 +1439,23 @@
     "back": "Назад {{seconds}} секунди",
     "forward": "Напред {{seconds}} секунди",
     "speed": "Брзина репродукције {{rate}}x"
+  },
+  "folder": {
+    "all": "All memos",
+    "none": "No folder",
+    "new": "New folder",
+    "new-subfolder": "New subfolder",
+    "rename": "Rename folder",
+    "rename-success": "Folder renamed",
+    "create-success": "Folder created",
+    "save-error": "Could not save the folder",
+    "delete-error": "Could not delete the folder",
+    "delete-title": "Delete this folder?",
+    "delete-description": "Memos in \"{{name}}\" and its subfolders are kept and moved out of the folder.",
+    "name": "Name",
+    "name-placeholder": "Folder name",
+    "empty": "No folders yet",
+    "load-error": "Could not load folders",
+    "loading": "Loading folders…"
   }
 }

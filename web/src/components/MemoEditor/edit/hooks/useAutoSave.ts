@@ -5,17 +5,21 @@ import { LocationSchema } from "@/types/proto/api/memo_service_pb";
 import { cacheService, type EditorDraft } from "../services";
 import { type EditorState, useEditorStore } from "../state";
 
-const draftFromState = ({ content, metadata }: EditorState): EditorDraft => ({
+const draftFromState = ({ content, title, metadata }: EditorState): EditorDraft => ({
   content,
+  ...(title ? { title } : {}),
   attachments: metadata.attachments,
   location: metadata.location ?? null,
   space: metadata.space,
+  ...(metadata.folder ? { folder: metadata.folder } : {}),
   visibility: metadata.visibility,
 });
 
 const sameDraft = (left: EditorDraft, right: EditorDraft): boolean =>
   left.content === right.content &&
+  left.title === right.title &&
   left.space === right.space &&
+  left.folder === right.folder &&
   left.visibility === right.visibility &&
   (left.location === right.location || (!!left.location && !!right.location && equals(LocationSchema, left.location, right.location))) &&
   left.attachments.length === right.attachments.length &&

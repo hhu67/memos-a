@@ -12,12 +12,14 @@ const pendingSaves = new Map<string, number>();
 // A selection's shape depends on the editor mode it was taken in, so each one keeps its mode.
 const cursors = new Map<string, { selection: EditorSelection; mode: EditorMode }>();
 const STRUCTURED_CACHE_ENTRY_KIND = "memos.editor-cache";
-const STRUCTURED_CACHE_ENTRY_VERSION = 3;
+const STRUCTURED_CACHE_ENTRY_VERSION = 4;
 
 export interface EditorDraft {
   content: string;
+  title?: string;
   attachments: Attachment[];
   space?: string;
+  folder?: string;
   visibility?: Visibility;
   /** Undefined for legacy drafts; null explicitly remembers a removed location. */
   location?: Location | null;
@@ -29,9 +31,11 @@ function deserializeDraft(raw: string): EditorDraft {
       kind?: unknown;
       version?: unknown;
       content?: unknown;
+      title?: unknown;
       attachments?: unknown;
       location?: unknown;
       space?: unknown;
+      folder?: unknown;
       visibility?: unknown;
     };
     if (parsed.kind === STRUCTURED_CACHE_ENTRY_KIND && parsed.version === 1 && typeof parsed.content === "string") {
@@ -39,7 +43,7 @@ function deserializeDraft(raw: string): EditorDraft {
     }
     if (
       parsed.kind === STRUCTURED_CACHE_ENTRY_KIND &&
-      (parsed.version === 2 || parsed.version === STRUCTURED_CACHE_ENTRY_VERSION) &&
+      (parsed.version === 2 || parsed.version === 3 || parsed.version === STRUCTURED_CACHE_ENTRY_VERSION) &&
       typeof parsed.content === "string"
     ) {
       const attachments = Array.isArray(parsed.attachments)
@@ -52,7 +56,7 @@ function deserializeDraft(raw: string): EditorDraft {
           })
         : [];
       let location: Location | null | undefined;
-      if (parsed.version === STRUCTURED_CACHE_ENTRY_VERSION) {
+      if (parsed.version === 3 || parsed.version === STRUCTURED_CACHE_ENTRY_VERSION) {
         location = null;
         if (parsed.location) {
           try {
@@ -63,12 +67,22 @@ function deserializeDraft(raw: string): EditorDraft {
         }
       }
       const space = typeof parsed.space === "string" && parsed.space.startsWith("spaces/") ? parsed.space : undefined;
+      const folder = typeof parsed.folder === "string" && parsed.folder.startsWith("folders/") ? parsed.folder : undefined;
+      const title = typeof parsed.title === "string" ? parsed.title : undefined;
       const visibility = [Visibility.PRIVATE, Visibility.PROTECTED, Visibility.PUBLIC, Visibility.SPACE].includes(
         parsed.visibility as Visibility,
       )
         ? (parsed.visibility as Visibility)
         : undefined;
-      return { content: parsed.content, attachments, ...(location !== undefined ? { location } : {}), space, visibility };
+      return {
+        content: parsed.content,
+        attachments,
+        ...(title !== undefined ? { title } : {}),
+        ...(location !== undefined ? { location } : {}),
+        space,
+        folder,
+        visibility,
+      };
     }
   } catch {
     // Drafts have historically been stored as raw markdown strings.
@@ -77,12 +91,14 @@ function deserializeDraft(raw: string): EditorDraft {
   return { content: raw, attachments: [] };
 }
 
-function serializeDraft({ content, attachments, location, space, visibility }: EditorDraft): string {
+function serializeDraft({ content, title, attachments, location, space, folder, visibility }: EditorDraft): string {
   return JSON.stringify({
     kind: STRUCTURED_CACHE_ENTRY_KIND,
     version: STRUCTURED_CACHE_ENTRY_VERSION,
     location: location ? toJson(LocationSchema, location) : null,
     space,
+    folder,
+    title,
     visibility,
     content,
     attachments: attachments.map((attachment) => toJson(AttachmentSchema, attachment)),
@@ -90,7 +106,7 @@ function serializeDraft({ content, attachments, location, space, visibility }: E
 }
 
 function writeEntry(key: string, draft: EditorDraft): void {
-  if (draft.content.trim() || draft.attachments.length > 0 || draft.space) {
+  if (draft.content.trim() || draft.title?.trim() || draft.attachments.length > 0 || draft.space || draft.folder) {
     localStorage.setItem(key, serializeDraft(draft));
   } else {
     localStorage.removeItem(key);

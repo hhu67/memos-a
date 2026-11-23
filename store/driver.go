@@ -38,6 +38,12 @@ type Driver interface {
 	// CountUserMemos counts the memos a user created, comments included, in every row status and Space.
 	CountUserMemos(ctx context.Context, creatorID int32) (int64, error)
 
+	// Folder model related methods.
+	CreateFolder(ctx context.Context, create *Folder) (*Folder, error)
+	ListFolders(ctx context.Context, find *FindFolder) ([]*Folder, error)
+	UpdateFolder(ctx context.Context, update *UpdateFolder) (*Folder, error)
+	DeleteFolder(ctx context.Context, delete *DeleteFolder) error
+
 	// Space model related methods.
 	CreateSpace(ctx context.Context, create *Space, creatorID int32) (*Space, error)
 	ListSpaces(ctx context.Context, find *FindSpace) ([]*Space, error)

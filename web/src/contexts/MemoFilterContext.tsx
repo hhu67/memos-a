@@ -7,6 +7,8 @@ export type FilterFactor =
   | "visibility"
   | "contentSearch"
   | "celSearch"
+  | "folder"
+  | "noFolder"
   | "displayTime"
   | "pinned"
   | "property.hasLink"

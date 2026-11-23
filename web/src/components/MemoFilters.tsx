@@ -7,6 +7,8 @@ import {
   CheckCircleIcon,
   CodeIcon,
   EyeIcon,
+  FolderIcon,
+  FolderMinusIcon,
   HashIcon,
   ImageIcon,
   LinkIcon,
@@ -53,6 +55,14 @@ const FILTER_CONFIGS: Record<FilterFactor, FilterConfig> = {
     icon: SearchIcon,
     getLabel: (value) => value,
     editableQuery: true,
+  },
+  folder: {
+    icon: FolderIcon,
+    getLabel: (value) => value.replace(/^folders\//, ""),
+  },
+  noFolder: {
+    icon: FolderMinusIcon,
+    getLabel: (_value, t) => t("folder.none"),
   },
   displayTime: {
     icon: CalendarIcon,

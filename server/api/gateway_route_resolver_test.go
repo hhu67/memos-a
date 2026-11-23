@@ -238,6 +238,7 @@ func TestOpenAPIPathsReachTheirGatewayMethods(t *testing.T) {
 	require.NoError(t, apipb.RegisterAuthServiceHandlerServer(ctx, mux, apipb.UnimplementedAuthServiceServer{}))
 	require.NoError(t, apipb.RegisterUserServiceHandlerServer(ctx, mux, apipb.UnimplementedUserServiceServer{}))
 	require.NoError(t, apipb.RegisterMemoServiceHandlerServer(ctx, mux, apipb.UnimplementedMemoServiceServer{}))
+	require.NoError(t, apipb.RegisterFolderServiceHandlerServer(ctx, mux, apipb.UnimplementedFolderServiceServer{}))
 	require.NoError(t, apipb.RegisterSpaceServiceHandlerServer(ctx, mux, apipb.UnimplementedSpaceServiceServer{}))
 	require.NoError(t, apipb.RegisterAttachmentServiceHandlerServer(ctx, mux, apipb.UnimplementedAttachmentServiceServer{}))
 	require.NoError(t, apipb.RegisterAIServiceHandlerServer(ctx, mux, apipb.UnimplementedAIServiceServer{}))

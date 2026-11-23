@@ -23,6 +23,17 @@ export const canChooseSpaceFor = ({
   defaultSpace?: string;
 }): boolean => (memo ? !memo.parent && canManageMemo(memo, currentUser) : !parentMemoName && !defaultSpace);
 
+/** Replies and comments never carry their own folder. */
+export const canChooseFolderFor = ({
+  memo,
+  currentUser,
+  parentMemoName,
+}: {
+  memo?: Memo;
+  currentUser: User | undefined;
+  parentMemoName?: string;
+}): boolean => (memo ? !memo.parent && canManageMemo(memo, currentUser) : !parentMemoName);
+
 export interface InitialEditorStateOptions {
   /** The memo being edited; its draft is never restored from the cache. */
   memo?: Memo;
@@ -34,6 +45,8 @@ export interface InitialEditorStateOptions {
   defaultLocation?: Location;
   /** Whether the draft may carry a Space of its own; a comment's Space is its parent's. */
   canChooseSpace?: boolean;
+  /** Whether the draft may be filed in a folder; comments have no folder of their own. */
+  canChooseFolder?: boolean;
 }
 
 /**
@@ -50,6 +63,7 @@ export function initialEditorState({
   defaultCreateTime,
   defaultLocation,
   canChooseSpace = false,
+  canChooseFolder = false,
 }: InitialEditorStateOptions): EditorState {
   const base = createInitialState(initialFocusMode);
   if (memo) {
@@ -61,12 +75,14 @@ export function initialEditorState({
   return {
     ...base,
     content: draft.content,
+    title: draft.title ?? base.title,
     metadata: {
       ...base.metadata,
       attachments: draft.attachments.length > 0 ? draft.attachments : base.metadata.attachments,
       location: draft.location === null ? undefined : (draft.location ?? defaultLocation),
       visibility,
       space: canChooseSpace ? draft.space : undefined,
+      folder: canChooseFolder ? draft.folder : undefined,
     },
     timestamps: defaultCreateTime ? { createTime: defaultCreateTime, updateTime: defaultCreateTime } : base.timestamps,
   };

@@ -232,7 +232,8 @@
     "selected-location": "已選取的位置",
     "choose-location": "選擇位置",
     "unknown-error": "未知錯誤",
-    "error-occurred": "發生錯誤"
+    "error-occurred": "發生錯誤",
+    "folders": "Folders"
   },
   "locale-picker": {
     "no-language-feedback": "未找到語言？ 提交回饋"
@@ -410,7 +411,9 @@
     "remove-location": "移除位置",
     "recording-unsupported": "此瀏覽器不支援錄音。",
     "microphone-denied": "麥克風權限遭拒。",
-    "recording-failed": "無法開始錄音。"
+    "recording-failed": "無法開始錄音。",
+    "title-placeholder": "Title (optional)",
+    "folder": "Folder"
   },
   "inbox": {
     "failed-to-load": "載入失敗",
@@ -1435,5 +1438,23 @@
     "back": "倒退 {{seconds}} 秒",
     "forward": "快轉 {{seconds}} 秒",
     "speed": "播放速度 {{rate}}x"
+  },
+  "folder": {
+    "all": "All memos",
+    "none": "No folder",
+    "new": "New folder",
+    "new-subfolder": "New subfolder",
+    "rename": "Rename folder",
+    "rename-success": "Folder renamed",
+    "create-success": "Folder created",
+    "save-error": "Could not save the folder",
+    "delete-error": "Could not delete the folder",
+    "delete-title": "Delete this folder?",
+    "delete-description": "Memos in \"{{name}}\" and its subfolders are kept and moved out of the folder.",
+    "name": "Name",
+    "name-placeholder": "Folder name",
+    "empty": "No folders yet",
+    "load-error": "Could not load folders",
+    "loading": "Loading folders…"
   }
 }

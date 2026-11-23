@@ -184,7 +184,8 @@
     "selected-location": "Seçili konum",
     "choose-location": "Bir konum seç",
     "unknown-error": "Bilinmeyen hata",
-    "error-occurred": "Bir hata oluştu"
+    "error-occurred": "Bir hata oluştu",
+    "folders": "Folders"
   },
   "locale-picker": {
     "no-language-feedback": "Aradığın dil yok mu? Geri bildirim gönder"
@@ -362,7 +363,9 @@
     "remove-location": "Konumu kaldır",
     "recording-unsupported": "Bu tarayıcı ses kaydını desteklemiyor.",
     "microphone-denied": "Mikrofon izni verilmedi.",
-    "recording-failed": "Ses kaydı başlatılamadı."
+    "recording-failed": "Ses kaydı başlatılamadı.",
+    "title-placeholder": "Title (optional)",
+    "folder": "Folder"
   },
   "inbox": {
     "failed-to-load": "Bildirim yüklenemedi",
@@ -1435,5 +1438,23 @@
     "back": "{{seconds}} saniye geri sar",
     "forward": "{{seconds}} saniye ileri sar",
     "speed": "Oynatma hızı {{rate}}x"
+  },
+  "folder": {
+    "all": "All memos",
+    "none": "No folder",
+    "new": "New folder",
+    "new-subfolder": "New subfolder",
+    "rename": "Rename folder",
+    "rename-success": "Folder renamed",
+    "create-success": "Folder created",
+    "save-error": "Could not save the folder",
+    "delete-error": "Could not delete the folder",
+    "delete-title": "Delete this folder?",
+    "delete-description": "Memos in \"{{name}}\" and its subfolders are kept and moved out of the folder.",
+    "name": "Name",
+    "name-placeholder": "Folder name",
+    "empty": "No folders yet",
+    "load-error": "Could not load folders",
+    "loading": "Loading folders…"
   }
 }

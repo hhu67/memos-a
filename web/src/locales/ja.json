@@ -153,7 +153,8 @@
     "selected-location": "選択した場所",
     "choose-location": "場所を選択",
     "unknown-error": "不明なエラー",
-    "error-occurred": "エラーが発生しました"
+    "error-occurred": "エラーが発生しました",
+    "folders": "Folders"
   },
   "locale-picker": {
     "no-language-feedback": "言語が見つかりませんか? フィードバックを送信する"
@@ -331,7 +332,9 @@
     "remove-location": "場所を削除",
     "recording-unsupported": "このブラウザーは音声録音に対応していません。",
     "microphone-denied": "マイクへのアクセスが拒否されました。",
-    "recording-failed": "音声録音を開始できませんでした。"
+    "recording-failed": "音声録音を開始できませんでした。",
+    "title-placeholder": "Title (optional)",
+    "folder": "Folder"
   },
   "inbox": {
     "failed-to-load": "受信トレイアイテムの読み込みに失敗しました",
@@ -1435,5 +1438,23 @@
     "back": "{{seconds}} 秒戻る",
     "forward": "{{seconds}} 秒進む",
     "speed": "再生速度 {{rate}}x"
+  },
+  "folder": {
+    "all": "All memos",
+    "none": "No folder",
+    "new": "New folder",
+    "new-subfolder": "New subfolder",
+    "rename": "Rename folder",
+    "rename-success": "Folder renamed",
+    "create-success": "Folder created",
+    "save-error": "Could not save the folder",
+    "delete-error": "Could not delete the folder",
+    "delete-title": "Delete this folder?",
+    "delete-description": "Memos in \"{{name}}\" and its subfolders are kept and moved out of the folder.",
+    "name": "Name",
+    "name-placeholder": "Folder name",
+    "empty": "No folders yet",
+    "load-error": "Could not load folders",
+    "loading": "Loading folders…"
   }
 }

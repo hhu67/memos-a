@@ -153,7 +153,8 @@
     "selected-location": "Vị trí đã chọn",
     "choose-location": "Chọn một vị trí",
     "unknown-error": "Lỗi không xác định",
-    "error-occurred": "Đã xảy ra lỗi"
+    "error-occurred": "Đã xảy ra lỗi",
+    "folders": "Folders"
   },
   "locale-picker": {
     "no-language-feedback": "Không tìm thấy ngôn ngữ? Gửi phản hồi"
@@ -331,7 +332,9 @@
     "remove-location": "Xóa vị trí",
     "recording-unsupported": "Trình duyệt này không hỗ trợ ghi âm.",
     "microphone-denied": "Quyền truy cập micrô đã bị từ chối.",
-    "recording-failed": "Không thể bắt đầu ghi âm."
+    "recording-failed": "Không thể bắt đầu ghi âm.",
+    "title-placeholder": "Title (optional)",
+    "folder": "Folder"
   },
   "inbox": {
     "failed-to-load": "Không thể tải mục hộp thư",
@@ -1435,5 +1438,23 @@
     "back": "Lùi {{seconds}} giây",
     "forward": "Tiến {{seconds}} giây",
     "speed": "Tốc độ phát {{rate}}x"
+  },
+  "folder": {
+    "all": "All memos",
+    "none": "No folder",
+    "new": "New folder",
+    "new-subfolder": "New subfolder",
+    "rename": "Rename folder",
+    "rename-success": "Folder renamed",
+    "create-success": "Folder created",
+    "save-error": "Could not save the folder",
+    "delete-error": "Could not delete the folder",
+    "delete-title": "Delete this folder?",
+    "delete-description": "Memos in \"{{name}}\" and its subfolders are kept and moved out of the folder.",
+    "name": "Name",
+    "name-placeholder": "Folder name",
+    "empty": "No folders yet",
+    "load-error": "Could not load folders",
+    "loading": "Loading folders…"
   }
 }

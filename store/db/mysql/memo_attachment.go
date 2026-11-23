@@ -207,6 +207,9 @@ func applyMemoUpdate(ctx context.Context, executor memoUpdateExecer, update *sto
 	if v := update.Content; v != nil {
 		set, args = append(set, "`content` = ?"), append(args, *v)
 	}
+	if v := update.Title; v != nil {
+		set, args = append(set, "`title` = ?"), append(args, *v)
+	}
 	if v := update.Visibility; v != nil {
 		set, args = append(set, "`visibility` = ?"), append(args, *v)
 	}
@@ -224,6 +227,11 @@ func applyMemoUpdate(ctx context.Context, executor memoUpdateExecer, update *sto
 		set = append(set, "`space_id` = NULL")
 	} else if v := update.SpaceID; v != nil {
 		set, args = append(set, "`space_id` = ?"), append(args, *v)
+	}
+	if update.ClearFolder {
+		set = append(set, "`folder_id` = NULL")
+	} else if v := update.FolderID; v != nil {
+		set, args = append(set, "`folder_id` = ?"), append(args, *v)
 	}
 	if len(set) == 0 {
 		return nil

@@ -114,6 +114,9 @@ func deleteUserTargetsTx(ctx context.Context, tx *sql.Tx, userID int32, targets 
 	if err := deleteMemosTx(ctx, tx, memoIDs); err != nil {
 		return err
 	}
+	if err := deleteFoldersByCreatorTx(ctx, tx, userID); err != nil {
+		return err
+	}
 	if err := deleteReactionsByMemoIDsTx(ctx, tx, memoIDs); err != nil {
 		return err
 	}
@@ -360,6 +363,11 @@ func deleteMemoRelationsTx(ctx context.Context, tx *sql.Tx, memoIDs []int32) err
 		}
 	}
 	return nil
+}
+
+func deleteFoldersByCreatorTx(ctx context.Context, tx *sql.Tx, userID int32) error {
+	_, err := tx.ExecContext(ctx, "DELETE FROM folder WHERE creator_id = "+deleteUserPlaceholder(1), userID)
+	return err
 }
 
 func deleteMemosTx(ctx context.Context, tx *sql.Tx, memoIDs []int32) error {

@@ -5,6 +5,7 @@ import { getAccessToken, hasStoredToken, isTokenExpired, REQUEST_TOKEN_EXPIRY_BU
 import { AIService } from "./types/proto/api/ai_service_pb";
 import { AttachmentService } from "./types/proto/api/attachment_service_pb";
 import { AuthService } from "./types/proto/api/auth_service_pb";
+import { FolderService } from "./types/proto/api/folder_service_pb";
 import { IdentityProviderService } from "./types/proto/api/idp_service_pb";
 import { InstanceService } from "./types/proto/api/instance_service_pb";
 import { MemoService } from "./types/proto/api/memo_service_pb";
@@ -195,6 +196,7 @@ export const userServiceClient = createClient(UserService, transport);
 
 // Content service clients
 export const memoServiceClient = createClient(MemoService, transport);
+export const folderServiceClient = createClient(FolderService, transport);
 export const attachmentServiceClient = createClient(AttachmentService, transport);
 export const aiServiceClient = createClient(AIService, transport);
 export const spaceServiceClient = createClient(SpaceService, transport);

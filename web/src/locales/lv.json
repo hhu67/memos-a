@@ -191,7 +191,8 @@
     "selected-location": "Atlasītā atrašanās vieta",
     "choose-location": "Izvēlieties atrašanās vietu",
     "unknown-error": "Nezināma kļūda",
-    "error-occurred": "Radās kļūda"
+    "error-occurred": "Radās kļūda",
+    "folders": "Folders"
   },
   "locale-picker": {
     "no-language-feedback": "Valoda nav atrasta? Iesniedziet atsauksmes"
@@ -369,7 +370,9 @@
     "remove-location": "Noņemt atrašanās vietu",
     "recording-unsupported": "Šī pārlūkprogramma neatbalsta audio ierakstīšanu.",
     "microphone-denied": "Piekļuve mikrofonam tika liegta.",
-    "recording-failed": "Neizdevās sākt audio ierakstīšanu."
+    "recording-failed": "Neizdevās sākt audio ierakstīšanu.",
+    "title-placeholder": "Title (optional)",
+    "folder": "Folder"
   },
   "inbox": {
     "failed-to-load": "Neizdevās ielādēt iesūtnes vienumu",
@@ -1436,5 +1439,23 @@
     "back": "Atpakaļ {{seconds}} sekundes",
     "forward": "Uz priekšu {{seconds}} sekundes",
     "speed": "Atskaņošanas ātrums {{rate}}x"
+  },
+  "folder": {
+    "all": "All memos",
+    "none": "No folder",
+    "new": "New folder",
+    "new-subfolder": "New subfolder",
+    "rename": "Rename folder",
+    "rename-success": "Folder renamed",
+    "create-success": "Folder created",
+    "save-error": "Could not save the folder",
+    "delete-error": "Could not delete the folder",
+    "delete-title": "Delete this folder?",
+    "delete-description": "Memos in \"{{name}}\" and its subfolders are kept and moved out of the folder.",
+    "name": "Name",
+    "name-placeholder": "Folder name",
+    "empty": "No folders yet",
+    "load-error": "Could not load folders",
+    "loading": "Loading folders…"
   }
 }

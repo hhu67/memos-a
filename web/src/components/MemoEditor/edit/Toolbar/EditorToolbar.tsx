@@ -8,6 +8,7 @@ import { validationService } from "../services";
 import { useEditorContext, useEditorSelector } from "../state";
 import type { EditorToolbarProps } from "../types";
 import AudienceMenu from "./AudienceMenu";
+import FolderMenu from "./FolderMenu";
 import InsertMenu from "./InsertMenu";
 
 export const EditorToolbar: FC<EditorToolbarProps> = ({
@@ -17,6 +18,9 @@ export const EditorToolbar: FC<EditorToolbarProps> = ({
   parentMemoName,
   space,
   canChooseSpace,
+  folder,
+  canChooseFolder,
+  onFolderChange,
   onAudioRecorderClick,
   viewToggles,
   sourceMode,
@@ -116,6 +120,7 @@ export const EditorToolbar: FC<EditorToolbarProps> = ({
           onSpaceChange={canChooseSpace ? handleSpaceChange : undefined}
           disabled={isSaving}
         />
+        {canChooseFolder && onFolderChange && <FolderMenu value={folder} onChange={onFolderChange} disabled={isSaving} />}
       </div>
 
       <div className="flex shrink-0 flex-row items-center justify-end gap-1">

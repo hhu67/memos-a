@@ -356,6 +356,165 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
+    /api/folders:
+        get:
+            tags:
+                - FolderService
+            description: ListFolders lists the authenticated caller's folders, ordered by name.
+            operationId: FolderService_ListFolders
+            parameters:
+                - name: pageSize
+                  in: query
+                  description: |-
+                    Optional. The maximum number of folders to return. The service may return
+                     fewer. Defaults to 50; values above 1000 are coerced to 1000.
+                  schema:
+                    type: integer
+                    format: int32
+                - name: pageToken
+                  in: query
+                  description: |-
+                    Optional. A page token from a previous call. Provide it to retrieve the
+                     next page.
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ListFoldersResponse'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+        post:
+            tags:
+                - FolderService
+            description: |-
+                CreateFolder creates a folder owned by the authenticated caller. Set parent
+                 to nest it under another of the caller's folders.
+            operationId: FolderService_CreateFolder
+            parameters:
+                - name: folderId
+                  in: query
+                  description: |-
+                    Optional. The ID to use for the folder, which becomes the final segment of
+                     its resource name. If empty, a unique ID is generated.
+                     Format: ^[a-zA-Z0-9]([a-zA-Z0-9-]{0,34}[a-zA-Z0-9])?$
+                  schema:
+                    type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Folder'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Folder'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/folders/{folder}:
+        get:
+            tags:
+                - FolderService
+            description: GetFolder gets one of the authenticated caller's folders.
+            operationId: FolderService_GetFolder
+            parameters:
+                - name: folder
+                  in: path
+                  description: The folder id.
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Folder'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+        delete:
+            tags:
+                - FolderService
+            description: |-
+                DeleteFolder deletes a folder, all of its descendant folders, and detaches
+                 the memos filed in them (their folder is cleared; the memos are kept).
+            operationId: FolderService_DeleteFolder
+            parameters:
+                - name: folder
+                  in: path
+                  description: The folder id.
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content: {}
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+        patch:
+            tags:
+                - FolderService
+            description: |-
+                UpdateFolder renames a folder or moves it under another folder. A move that
+                 would make the folder its own ancestor is rejected.
+            operationId: FolderService_UpdateFolder
+            parameters:
+                - name: folder
+                  in: path
+                  description: The folder id.
+                  required: true
+                  schema:
+                    type: string
+                - name: updateMask
+                  in: query
+                  description: 'Required. The fields to update. Supported paths: title, parent.'
+                  schema:
+                    type: string
+                    format: field-mask
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Folder'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Folder'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
     /api/identity-providers:
         get:
             tags:
@@ -716,6 +875,9 @@ paths:
                        visibility (string: PRIVATE | PROTECTED | PUBLIC | SPACE),
                        space (string resource name, or null when the memo has no space;
                          supports == and comparisons against null, e.g. space != null),
+                       folder (string resource name, or null when the memo is not in a folder;
+                         supports == and comparisons against null, e.g. folder == null),
+                       title (string; supports contains, e.g. title.contains("roadmap")),
                        tags (list<string>; match with `"work" in tags`, not `tag == "work"`),
                        has_task_list / has_link / has_code / has_incomplete_tasks (bool),
                        has_location (bool; true when the memo has a location attached),
@@ -936,8 +1098,8 @@ paths:
                   in: query
                   description: |-
                     Required. The fields to update. Supported paths: content, visibility,
-                     space, pinned, state, create_time, update_time, location, attachments,
-                     relations.
+                     space, title, folder, pinned, state, create_time, update_time, location,
+                     attachments, relations.
                   schema:
                     type: string
                     format: field-mask
@@ -3669,6 +3831,36 @@ components:
             description: |-
                 FieldMapping maps user info claims of an OAuth2 identity provider to user fields.
                  Each field holds the name of a claim.
+        Folder:
+            required:
+                - title
+            type: object
+            properties:
+                name:
+                    type: string
+                    description: |-
+                        Identifier. The resource name of the folder, where folder is the
+                         user-defined UID.
+                         Format: folders/{folder}
+                title:
+                    type: string
+                    description: Required. The display name of the folder.
+                parent:
+                    type: string
+                    description: |-
+                        Optional. The parent folder. Unset means the folder is at the root.
+                         Format: folders/{folder}
+                createTime:
+                    readOnly: true
+                    type: string
+                    description: Output only. The creation time.
+                    format: date-time
+                updateTime:
+                    readOnly: true
+                    type: string
+                    description: Output only. The last update time.
+                    format: date-time
+            description: Folder is a named node in a user's personal folder tree.
         GeneralSetting_CustomProfile:
             type: object
             properties:
@@ -4291,6 +4483,18 @@ components:
                     type: string
                     description: A token to retrieve the next page. Empty when there are no more pages.
             description: Response message for AttachmentService.ListAttachments.
+        ListFoldersResponse:
+            type: object
+            properties:
+                folders:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/Folder'
+                    description: The folders.
+                nextPageToken:
+                    type: string
+                    description: A token to retrieve the next page. Empty when there are no more pages.
+            description: Response message for FolderService.ListFolders.
         ListIdentityProvidersResponse:
             type: object
             properties:
@@ -4678,6 +4882,17 @@ components:
                         Optional. The last update time. Defaults to the current time when unset on
                          creation.
                     format: date-time
+                title:
+                    type: string
+                    description: |-
+                        Optional. A short display title. It is independent of the H1 heading in the
+                         content and may be empty.
+                folder:
+                    type: string
+                    description: |-
+                        Optional. The folder the memo is filed in. Unset means the memo is not in a
+                         folder.
+                         Format: folders/{folder}
             description: Memo is a Markdown note written by a user.
         MemoRelation:
             required:
@@ -4781,6 +4996,7 @@ components:
                 lucide:
                     type: string
                     description: A canonical Lucide icon name, such as "leaf".
+            description: Icon is the display icon of a memo view.
         Memo_Property:
             type: object
             properties:
@@ -5968,6 +6184,10 @@ tags:
       description: AttachmentService manages files attached to memos.
     - name: AuthService
       description: 'AuthService manages sign-in sessions: it issues, refreshes, and revokes the tokens that authenticate API calls.'
+    - name: FolderService
+      description: |-
+        FolderService manages a user's personal folder tree and the memos filed in it.
+         Every folder belongs to exactly one creator; a folder is never shared.
     - name: IdentityProviderService
       description: IdentityProviderService manages the external identity providers users can sign in with.
     - name: InstanceService

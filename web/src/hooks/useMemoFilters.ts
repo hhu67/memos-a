@@ -56,6 +56,10 @@ export const buildMemoFilter = ({
       conditions.push(filter.value);
     } else if (filter.factor === "tagSearch") {
       conditions.push(`tag in [${escapeFilterValue(filter.value)}]`);
+    } else if (filter.factor === "folder") {
+      conditions.push(`folder == ${escapeFilterValue(filter.value)}`);
+    } else if (filter.factor === "noFolder") {
+      conditions.push("folder == null");
     } else if (filter.factor === "pinned") {
       if (includePinned) {
         conditions.push(`pinned`);

@@ -189,7 +189,14 @@ type Memo struct {
 	CreateTime *timestamppb.Timestamp `protobuf:"bytes,16,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
 	// Optional. The last update time. Defaults to the current time when unset on
 	// creation.
-	UpdateTime    *timestamppb.Timestamp `protobuf:"bytes,17,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
+	UpdateTime *timestamppb.Timestamp `protobuf:"bytes,17,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
+	// Optional. A short display title. It is independent of the H1 heading in the
+	// content and may be empty.
+	Title string `protobuf:"bytes,18,opt,name=title,proto3" json:"title,omitempty"`
+	// Optional. The folder the memo is filed in. Unset means the memo is not in a
+	// folder.
+	// Format: folders/{folder}
+	Folder        *string `protobuf:"bytes,19,opt,name=folder,proto3,oneof" json:"folder,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -343,6 +350,20 @@ func (x *Memo) GetUpdateTime() *timestamppb.Timestamp {
 	return nil
 }
 
+func (x *Memo) GetTitle() string {
+	if x != nil {
+		return x.Title
+	}
+	return ""
+}
+
+func (x *Memo) GetFolder() string {
+	if x != nil && x.Folder != nil {
+		return *x.Folder
+	}
+	return ""
+}
+
 // Request message for MemoService.ListMemos.
 type ListMemosRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -354,27 +375,27 @@ type ListMemosRequest struct {
 	PageToken string `protobuf:"bytes,2,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
 	// Optional. A CEL expression to filter memos. Combine terms with && and ||.
 	// Available fields:
-	//
-	//	content (string), creator (string, e.g. "users/1"),
-	//	created_ts / updated_ts (timestamp), pinned (bool),
-	//	visibility (string: PRIVATE | PROTECTED | PUBLIC | SPACE),
-	//	space (string resource name, or null when the memo has no space;
-	//	  supports == and comparisons against null, e.g. space != null),
-	//	tags (list<string>; match with `"work" in tags`, not `tag == "work"`),
-	//	has_task_list / has_link / has_code / has_incomplete_tasks (bool),
-	//	has_location (bool; true when the memo has a location attached),
-	//	has_attachments (bool; true when a file is attached to the memo),
-	//	has_image (bool; true when the content contains a Markdown image or an
-	//	  image file is attached).
-	//
+	//   content (string), creator (string, e.g. "users/1"),
+	//   created_ts / updated_ts (timestamp), pinned (bool),
+	//   visibility (string: PRIVATE | PROTECTED | PUBLIC | SPACE),
+	//   space (string resource name, or null when the memo has no space;
+	//     supports == and comparisons against null, e.g. space != null),
+	//   folder (string resource name, or null when the memo is not in a folder;
+	//     supports == and comparisons against null, e.g. folder == null),
+	//   title (string; supports contains, e.g. title.contains("roadmap")),
+	//   tags (list<string>; match with `"work" in tags`, not `tag == "work"`),
+	//   has_task_list / has_link / has_code / has_incomplete_tasks (bool),
+	//   has_location (bool; true when the memo has a location attached),
+	//   has_attachments (bool; true when a file is attached to the memo),
+	//   has_image (bool; true when the content contains a Markdown image or an
+	//     image file is attached).
 	// Note: the time fields here are created_ts / updated_ts, which differ from
 	// the create_time / update_time names used by order_by.
 	// Examples:
-	//
-	//	pinned == true && visibility == "PUBLIC"
-	//	space == "spaces/team" or space == null
-	//	tags.exists(t, t == "urgent")
-	//	content.contains("roadmap") && created_ts > now - duration("168h")
+	//   pinned == true && visibility == "PUBLIC"
+	//   space == "spaces/team" or space == null
+	//   tags.exists(t, t == "urgent")
+	//   content.contains("roadmap") && created_ts > now - duration("168h")
 	Filter string `protobuf:"bytes,3,opt,name=filter,proto3" json:"filter,omitempty"`
 	// Optional. The order to sort results by, as a comma-separated list of
 	// fields following AIP-132. Defaults to "create_time desc".
@@ -630,8 +651,8 @@ type UpdateMemoRequest struct {
 	// Required. The memo to update. Its name identifies the memo.
 	Memo *Memo `protobuf:"bytes,1,opt,name=memo,proto3" json:"memo,omitempty"`
 	// Required. The fields to update. Supported paths: content, visibility,
-	// space, pinned, state, create_time, update_time, location, attachments,
-	// relations.
+	// space, title, folder, pinned, state, create_time, update_time, location,
+	// attachments, relations.
 	UpdateMask    *fieldmaskpb.FieldMask `protobuf:"bytes,2,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -2394,7 +2415,7 @@ var File_api_memo_service_proto protoreflect.FileDescriptor
 
 const file_api_memo_service_proto_rawDesc = "" +
 	"\n" +
-	"\x16api/memo_service.proto\x12\tmemos.api\x1a\x1capi/attachment_service.proto\x1a\x10api/common.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x17google/api/client.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x19google/api/resource.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a google/protobuf/field_mask.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xee\b\n" +
+	"\x16api/memo_service.proto\x12\tmemos.api\x1a\x1capi/attachment_service.proto\x1a\x10api/common.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x17google/api/client.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x19google/api/resource.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a google/protobuf/field_mask.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xcb\t\n" +
 	"\x04Memo\x12\x17\n" +
 	"\x04name\x18\x01 \x01(\tB\x03\xe0A\bR\x04name\x120\n" +
 	"\acreator\x18\x02 \x01(\tB\x16\xe0A\x03\xfaA\x10\n" +
@@ -2420,7 +2441,10 @@ const file_api_memo_service_proto_rawDesc = "" +
 	"\vcreate_time\x18\x10 \x01(\v2\x1a.google.protobuf.TimestampB\x03\xe0A\x01R\n" +
 	"createTime\x12@\n" +
 	"\vupdate_time\x18\x11 \x01(\v2\x1a.google.protobuf.TimestampB\x03\xe0A\x01R\n" +
-	"updateTime\x1a\xd6\x01\n" +
+	"updateTime\x12\x19\n" +
+	"\x05title\x18\x12 \x01(\tB\x03\xe0A\x01R\x05title\x125\n" +
+	"\x06folder\x18\x13 \x01(\tB\x18\xe0A\x01\xfaA\x12\n" +
+	"\x10memos.api/FolderH\x03R\x06folder\x88\x01\x01\x1a\xd6\x01\n" +
 	"\bProperty\x12\x14\n" +
 	"\x05title\x18\x01 \x01(\tR\x05title\x12\x19\n" +
 	"\bhas_link\x18\x02 \x01(\bR\ahasLink\x12\x19\n" +
@@ -2431,7 +2455,8 @@ const file_api_memo_service_proto_rawDesc = "" +
 	"\x0ememos.api/Memo\x12\fmemos/{memo}*\x05memos2\x04memoB\b\n" +
 	"\x06_spaceB\v\n" +
 	"\t_locationB\t\n" +
-	"\a_parent\"\xea\x01\n" +
+	"\a_parentB\t\n" +
+	"\a_folder\"\xea\x01\n" +
 	"\x10ListMemosRequest\x12 \n" +
 	"\tpage_size\x18\x01 \x01(\x05B\x03\xe0A\x01R\bpageSize\x12\"\n" +
 	"\n" +

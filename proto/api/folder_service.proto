@@ -1,0 +1,147 @@
+syntax = "proto3";
+
+package memos.api;
+
+import "google/api/annotations.proto";
+import "google/api/client.proto";
+import "google/api/field_behavior.proto";
+import "google/api/resource.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/field_mask.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "gen/api";
+
+// FolderService manages a user's personal folder tree and the memos filed in it.
+// Every folder belongs to exactly one creator; a folder is never shared.
+service FolderService {
+  // ListFolders lists the authenticated caller's folders, ordered by name.
+  rpc ListFolders(ListFoldersRequest) returns (ListFoldersResponse) {
+    option (google.api.http) = {get: "/api/folders"};
+    option (google.api.method_signature) = "";
+  }
+
+  // GetFolder gets one of the authenticated caller's folders.
+  rpc GetFolder(GetFolderRequest) returns (Folder) {
+    option (google.api.http) = {get: "/api/{name=folders/*}"};
+    option (google.api.method_signature) = "name";
+  }
+
+  // CreateFolder creates a folder owned by the authenticated caller. Set parent
+  // to nest it under another of the caller's folders.
+  rpc CreateFolder(CreateFolderRequest) returns (Folder) {
+    option (google.api.http) = {
+      post: "/api/folders"
+      body: "folder"
+    };
+    option (google.api.method_signature) = "folder";
+  }
+
+  // UpdateFolder renames a folder or moves it under another folder. A move that
+  // would make the folder its own ancestor is rejected.
+  rpc UpdateFolder(UpdateFolderRequest) returns (Folder) {
+    option (google.api.http) = {
+      patch: "/api/{folder.name=folders/*}"
+      body: "folder"
+    };
+    option (google.api.method_signature) = "folder,update_mask";
+  }
+
+  // DeleteFolder deletes a folder, all of its descendant folders, and detaches
+  // the memos filed in them (their folder is cleared; the memos are kept).
+  rpc DeleteFolder(DeleteFolderRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {delete: "/api/{name=folders/*}"};
+    option (google.api.method_signature) = "name";
+  }
+}
+
+// Folder is a named node in a user's personal folder tree.
+message Folder {
+  option (google.api.resource) = {
+    type: "memos.api/Folder"
+    pattern: "folders/{folder}"
+    singular: "folder"
+    plural: "folders"
+  };
+
+  // Identifier. The resource name of the folder, where folder is the
+  // user-defined UID.
+  // Format: folders/{folder}
+  string name = 1 [(google.api.field_behavior) = IDENTIFIER];
+
+  // Required. The display name of the folder.
+  string title = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // Optional. The parent folder. Unset means the folder is at the root.
+  // Format: folders/{folder}
+  optional string parent = 3 [
+    (google.api.field_behavior) = OPTIONAL,
+    (google.api.resource_reference) = {type: "memos.api/Folder"}
+  ];
+
+  // Output only. The creation time.
+  google.protobuf.Timestamp create_time = 4 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // Output only. The last update time.
+  google.protobuf.Timestamp update_time = 5 [(google.api.field_behavior) = OUTPUT_ONLY];
+}
+
+// Request message for FolderService.ListFolders.
+message ListFoldersRequest {
+  // Optional. The maximum number of folders to return. The service may return
+  // fewer. Defaults to 50; values above 1000 are coerced to 1000.
+  int32 page_size = 1 [(google.api.field_behavior) = OPTIONAL];
+
+  // Optional. A page token from a previous call. Provide it to retrieve the
+  // next page.
+  string page_token = 2 [(google.api.field_behavior) = OPTIONAL];
+}
+
+// Response message for FolderService.ListFolders.
+message ListFoldersResponse {
+  // The folders.
+  repeated Folder folders = 1;
+
+  // A token to retrieve the next page. Empty when there are no more pages.
+  string next_page_token = 2;
+}
+
+// Request message for FolderService.GetFolder.
+message GetFolderRequest {
+  // Required. The resource name of the folder.
+  // Format: folders/{folder}
+  string name = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference) = {type: "memos.api/Folder"}
+  ];
+}
+
+// Request message for FolderService.CreateFolder.
+message CreateFolderRequest {
+  // Required. The folder to create.
+  Folder folder = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Optional. The ID to use for the folder, which becomes the final segment of
+  // its resource name. If empty, a unique ID is generated.
+  // Format: ^[a-zA-Z0-9]([a-zA-Z0-9-]{0,34}[a-zA-Z0-9])?$
+  string folder_id = 2 [(google.api.field_behavior) = OPTIONAL];
+}
+
+// Request message for FolderService.UpdateFolder.
+message UpdateFolderRequest {
+  // Required. The folder to update. Its name identifies the folder.
+  Folder folder = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Required. The fields to update. Supported paths: title, parent.
+  google.protobuf.FieldMask update_mask = 2 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Request message for FolderService.DeleteFolder.
+message DeleteFolderRequest {
+  // Required. The resource name of the folder to delete.
+  // Format: folders/{folder}
+  string name = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference) = {type: "memos.api/Folder"}
+  ];
+}

@@ -191,7 +191,8 @@
     "selected-location": "Locație selectată",
     "choose-location": "Alegeți o locație",
     "unknown-error": "Eroare necunoscută",
-    "error-occurred": "A apărut o eroare"
+    "error-occurred": "A apărut o eroare",
+    "folders": "Folders"
   },
   "locale-picker": {
     "no-language-feedback": "Limba nu a fost găsită? Trimiteți feedback"
@@ -369,7 +370,9 @@
     "remove-location": "Eliminați locația",
     "recording-unsupported": "Înregistrarea audio nu este acceptată în acest browser.",
     "microphone-denied": "Permisiunea pentru microfon a fost refuzată.",
-    "recording-failed": "Pornirea înregistrării audio a eșuat."
+    "recording-failed": "Pornirea înregistrării audio a eșuat.",
+    "title-placeholder": "Title (optional)",
+    "folder": "Folder"
   },
   "inbox": {
     "failed-to-load": "Nu s-a încărcat elementul din căsuța de e-mail",
@@ -1436,5 +1439,23 @@
     "back": "Înapoi {{seconds}} secunde",
     "forward": "Înainte {{seconds}} secunde",
     "speed": "Viteză de redare {{rate}}x"
+  },
+  "folder": {
+    "all": "All memos",
+    "none": "No folder",
+    "new": "New folder",
+    "new-subfolder": "New subfolder",
+    "rename": "Rename folder",
+    "rename-success": "Folder renamed",
+    "create-success": "Folder created",
+    "save-error": "Could not save the folder",
+    "delete-error": "Could not delete the folder",
+    "delete-title": "Delete this folder?",
+    "delete-description": "Memos in \"{{name}}\" and its subfolders are kept and moved out of the folder.",
+    "name": "Name",
+    "name-placeholder": "Folder name",
+    "empty": "No folders yet",
+    "load-error": "Could not load folders",
+    "loading": "Loading folders…"
   }
 }

@@ -9,7 +9,7 @@ import { lazyWithReload } from "@/utils/lazy";
 import { convertVisibilityFromString } from "@/utils/memo";
 import { canManageMemo } from "@/utils/user";
 import { draftKeyFor, type MemoEditIdentity, migrateLegacyDraft } from "./edit/draftKey";
-import { canChooseSpaceFor, initialEditorState } from "./edit/initialState";
+import { canChooseFolderFor, canChooseSpaceFor, initialEditorState } from "./edit/initialState";
 import { cacheService } from "./edit/services/cacheService";
 import { EditorProvider } from "./edit/state";
 import { MemoContentView } from "./view/MemoContentView";
@@ -225,6 +225,7 @@ const EditingSession = ({
       defaultCreateTime,
       defaultLocation,
       canChooseSpace: canChooseSpaceFor({ memo, currentUser, parentMemoName, defaultSpace }),
+      canChooseFolder: canChooseFolderFor({ memo, currentUser, parentMemoName }),
     });
   });
   const EditSession = loadedEditSession ?? LazyEditSession;

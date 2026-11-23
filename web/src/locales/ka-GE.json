@@ -153,7 +153,8 @@
     "selected-location": "არჩეული მდებარეობა",
     "choose-location": "აირჩიეთ მდებარეობა",
     "unknown-error": "უცნობი შეცდომა",
-    "error-occurred": "მოხდა შეცდომა"
+    "error-occurred": "მოხდა შეცდომა",
+    "folders": "Folders"
   },
   "locale-picker": {
     "no-language-feedback": "ენა ვერ მოიძებნა? გამოხმაურება"
@@ -331,7 +332,9 @@
     "remove-location": "მდებარეობის წაშლა",
     "recording-unsupported": "ეს ბრაუზერი აუდიოს ჩაწერას არ უჭერს მხარს.",
     "microphone-denied": "მიკროფონზე წვდომა უარყოფილია.",
-    "recording-failed": "აუდიოს ჩაწერის დაწყება ვერ მოხერხდა."
+    "recording-failed": "აუდიოს ჩაწერის დაწყება ვერ მოხერხდა.",
+    "title-placeholder": "Title (optional)",
+    "folder": "Folder"
   },
   "inbox": {
     "failed-to-load": "ინბოქსის ელემენტის ჩატვირთვა ვერ მოხერხდა",
@@ -1435,5 +1438,23 @@
     "back": "{{seconds}} წამით უკან",
     "forward": "{{seconds}} წამით წინ",
     "speed": "დაკვრის სიჩქარე {{rate}}x"
+  },
+  "folder": {
+    "all": "All memos",
+    "none": "No folder",
+    "new": "New folder",
+    "new-subfolder": "New subfolder",
+    "rename": "Rename folder",
+    "rename-success": "Folder renamed",
+    "create-success": "Folder created",
+    "save-error": "Could not save the folder",
+    "delete-error": "Could not delete the folder",
+    "delete-title": "Delete this folder?",
+    "delete-description": "Memos in \"{{name}}\" and its subfolders are kept and moved out of the folder.",
+    "name": "Name",
+    "name-placeholder": "Folder name",
+    "empty": "No folders yet",
+    "load-error": "Could not load folders",
+    "loading": "Loading folders…"
   }
 }

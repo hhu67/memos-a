@@ -153,7 +153,8 @@
     "selected-location": "Localización seleccionada",
     "choose-location": "Escolle unha localización",
     "unknown-error": "Erro descoñecido",
-    "error-occurred": "Produciuse un erro"
+    "error-occurred": "Produciuse un erro",
+    "folders": "Folders"
   },
   "locale-picker": {
     "no-language-feedback": "Non se atopou o idioma? Enviar comentarios"
@@ -331,7 +332,9 @@
     "remove-location": "Quitar a localización",
     "recording-unsupported": "Este navegador non admite a gravación de audio.",
     "microphone-denied": "Denegouse o permiso do micrófono.",
-    "recording-failed": "Non se puido iniciar a gravación de audio."
+    "recording-failed": "Non se puido iniciar a gravación de audio.",
+    "title-placeholder": "Title (optional)",
+    "folder": "Folder"
   },
   "inbox": {
     "failed-to-load": "Fallou a carga do elemento da caixa de entrada",
@@ -1435,5 +1438,23 @@
     "back": "Retroceder {{seconds}} segundos",
     "forward": "Avanzar {{seconds}} segundos",
     "speed": "Velocidade de reprodución {{rate}}x"
+  },
+  "folder": {
+    "all": "All memos",
+    "none": "No folder",
+    "new": "New folder",
+    "new-subfolder": "New subfolder",
+    "rename": "Rename folder",
+    "rename-success": "Folder renamed",
+    "create-success": "Folder created",
+    "save-error": "Could not save the folder",
+    "delete-error": "Could not delete the folder",
+    "delete-title": "Delete this folder?",
+    "delete-description": "Memos in \"{{name}}\" and its subfolders are kept and moved out of the folder.",
+    "name": "Name",
+    "name-placeholder": "Folder name",
+    "empty": "No folders yet",
+    "load-error": "Could not load folders",
+    "loading": "Loading folders…"
   }
 }

@@ -7,10 +7,14 @@ export type LoadingKey = "saving" | "uploading" | "loading" | "transcribing";
 
 export interface EditorState {
   content: string;
+  /** A short optional title shown above the content. */
+  title: string;
   metadata: {
     visibility: Visibility;
     /** Destination chosen in an unscoped new-memo composer. */
     space?: string;
+    /** The folder the memo is filed in, as `folders/{uid}`. */
+    folder?: string;
     attachments: Attachment[];
     relations: MemoRelation[];
     location?: Location;
@@ -43,8 +47,12 @@ export interface EditorState {
 }
 
 export type EditorAction =
-  | { type: "INIT_MEMO"; payload: { content: string; metadata: EditorState["metadata"]; timestamps: EditorState["timestamps"] } }
+  | {
+      type: "INIT_MEMO";
+      payload: { content: string; title: string; metadata: EditorState["metadata"]; timestamps: EditorState["timestamps"] };
+    }
   | { type: "UPDATE_CONTENT"; payload: { content: string } }
+  | { type: "SET_TITLE"; payload: string }
   | { type: "SET_METADATA"; payload: Partial<EditorState["metadata"]> }
   | { type: "ADD_LOCAL_FILE"; payload: LocalFile }
   | { type: "REMOVE_LOCAL_FILE"; payload: string }
@@ -63,6 +71,7 @@ export type EditorAction =
 // Module-private template for createInitialState.
 const defaultState: EditorState = {
   content: "",
+  title: "",
   metadata: {
     visibility: Visibility.PRIVATE,
     attachments: [],

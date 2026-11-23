@@ -84,6 +84,11 @@ export interface EditorToolbarProps {
   space?: string;
   /** Only unscoped, new top-level memos can choose a destination. */
   canChooseSpace?: boolean;
+  /** The folder the memo is filed in, as `folders/{uid}`. */
+  folder?: string;
+  /** Only top-level memos can be filed in a folder. */
+  canChooseFolder?: boolean;
+  onFolderChange?: (folder?: string) => void;
   onAudioRecorderClick: () => void;
   viewToggles?: EditorViewToggles;
   sourceMode: EditorSourceModeToggle;

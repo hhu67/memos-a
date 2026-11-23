@@ -153,7 +153,8 @@
     "selected-location": "ตำแหน่งที่เลือก",
     "choose-location": "เลือกตำแหน่ง",
     "unknown-error": "ข้อผิดพลาดที่ไม่รู้จัก",
-    "error-occurred": "เกิดข้อผิดพลาด"
+    "error-occurred": "เกิดข้อผิดพลาด",
+    "folders": "Folders"
   },
   "locale-picker": {
     "no-language-feedback": "ไม่พบภาษา? ส่งข้อเสนอแนะ"
@@ -331,7 +332,9 @@
     "remove-location": "ลบตำแหน่ง",
     "recording-unsupported": "เบราว์เซอร์นี้ไม่รองรับการบันทึกเสียง",
     "microphone-denied": "การอนุญาตใช้ไมโครโฟนถูกปฏิเสธ",
-    "recording-failed": "เริ่มบันทึกเสียงไม่สำเร็จ"
+    "recording-failed": "เริ่มบันทึกเสียงไม่สำเร็จ",
+    "title-placeholder": "Title (optional)",
+    "folder": "Folder"
   },
   "inbox": {
     "failed-to-load": "ไม่สามารถโหลดรายการกล่องจดหมายได้",
@@ -1435,5 +1438,23 @@
     "back": "ย้อนกลับ {{seconds}} วินาที",
     "forward": "ข้ามไป {{seconds}} วินาที",
     "speed": "ความเร็วในการเล่น {{rate}}x"
+  },
+  "folder": {
+    "all": "All memos",
+    "none": "No folder",
+    "new": "New folder",
+    "new-subfolder": "New subfolder",
+    "rename": "Rename folder",
+    "rename-success": "Folder renamed",
+    "create-success": "Folder created",
+    "save-error": "Could not save the folder",
+    "delete-error": "Could not delete the folder",
+    "delete-title": "Delete this folder?",
+    "delete-description": "Memos in \"{{name}}\" and its subfolders are kept and moved out of the folder.",
+    "name": "Name",
+    "name-placeholder": "Folder name",
+    "empty": "No folders yet",
+    "load-error": "Could not load folders",
+    "loading": "Loading folders…"
   }
 }

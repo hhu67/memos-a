@@ -7,9 +7,14 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
       return {
         ...state,
         content: action.payload.content,
+        title: action.payload.title,
         metadata: action.payload.metadata,
         timestamps: action.payload.timestamps,
       };
+
+    case "SET_TITLE":
+      if (state.title === action.payload) return state;
+      return { ...state, title: action.payload };
 
     case "SET_DRAWING_SAVE_ERROR":
       return { ...state, drawingSaveError: action.payload };

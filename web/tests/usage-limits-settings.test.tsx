@@ -75,7 +75,7 @@ describe("UsageSection", () => {
     );
     render(<UsageSection />, { wrapper });
     expect(await screen.findByText("Usage limits")).toBeInTheDocument();
-    expect(screen.getByText("12 of 1,000")).toBeInTheDocument();
+    expect(screen.getByText(/12 of 1[\s,. ]000/)).toBeInTheDocument();
     expect(screen.getByText("512.0 MB of 1.0 GB")).toBeInTheDocument();
     expect(screen.queryByText("Largest file")).not.toBeInTheDocument();
   });

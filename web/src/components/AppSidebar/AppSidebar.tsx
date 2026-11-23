@@ -41,6 +41,7 @@ import { collectionNavigationPath, ROUTES } from "@/router/routes";
 import { User_Role, UserNotification_Status } from "@/types/proto/api/user_service_pb";
 import { useTranslate } from "@/utils/i18n";
 import CommonSidebarContent from "./CommonSidebarContent";
+import FoldersSection from "./FoldersSection";
 import { getSidebarRouteKind } from "./routes";
 import SidebarRow, { SIDEBAR_ROW_CLASSES, SidebarRowIconSlot, sidebarRowStateClasses } from "./SidebarRow";
 import SidebarSection, { SIDEBAR_SECTION_STACK_CLASSES } from "./SidebarSection";
@@ -105,8 +106,11 @@ const CollectionSidebarContent = ({
           <StatisticsView statisticsData={statistics} onDateSelect={() => setMobileOpen(false)} />
         </SidebarSection>
       )}
-      {/* Every collection route narrows the same way: views (yours, so signed-in only), days, tags. */}
+      {/* Every collection route narrows the same way: views (yours, so signed-in only), folders, days, tags. */}
       {currentUser && <ViewsSection />}
+      {currentUser && (!creatorUsername || creatorUsername === currentUser.username) && (
+        <FoldersSection onSelect={() => setMobileOpen(false)} />
+      )}
       <TagsSection tagCount={tags} scope={tagStateScope} onSelect={() => setMobileOpen(false)} />
     </div>
   );

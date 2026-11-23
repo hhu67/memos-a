@@ -153,7 +153,8 @@
     "selected-location": "निवडलेले स्थान",
     "choose-location": "स्थान निवडा",
     "unknown-error": "अज्ञात त्रुटी",
-    "error-occurred": "एक त्रुटी आली"
+    "error-occurred": "एक त्रुटी आली",
+    "folders": "Folders"
   },
   "locale-picker": {
     "no-language-feedback": "भाषा सापडली नाही? अभिप्राय सबमिट करा"
@@ -331,7 +332,9 @@
     "remove-location": "स्थान काढा",
     "recording-unsupported": "या ब्राउझरमध्ये ऑडिओ रेकॉर्डिंग समर्थित नाही.",
     "microphone-denied": "मायक्रोफोनची परवानगी नाकारली गेली.",
-    "recording-failed": "ऑडिओ रेकॉर्डिंग सुरू करण्यात अयशस्वी."
+    "recording-failed": "ऑडिओ रेकॉर्डिंग सुरू करण्यात अयशस्वी.",
+    "title-placeholder": "Title (optional)",
+    "folder": "Folder"
   },
   "inbox": {
     "failed-to-load": "इनबॉक्स आयटम लोड करण्यात अयशस्वी",
@@ -1435,5 +1438,23 @@
     "back": "{{seconds}} सेकंद मागे",
     "forward": "{{seconds}} सेकंद पुढे",
     "speed": "प्लेबॅक वेग {{rate}}x"
+  },
+  "folder": {
+    "all": "All memos",
+    "none": "No folder",
+    "new": "New folder",
+    "new-subfolder": "New subfolder",
+    "rename": "Rename folder",
+    "rename-success": "Folder renamed",
+    "create-success": "Folder created",
+    "save-error": "Could not save the folder",
+    "delete-error": "Could not delete the folder",
+    "delete-title": "Delete this folder?",
+    "delete-description": "Memos in \"{{name}}\" and its subfolders are kept and moved out of the folder.",
+    "name": "Name",
+    "name-placeholder": "Folder name",
+    "empty": "No folders yet",
+    "load-error": "Could not load folders",
+    "loading": "Loading folders…"
   }
 }

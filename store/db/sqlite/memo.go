@@ -32,8 +32,8 @@ func (d *DB) CreateMemo(ctx context.Context, create *store.Memo) (*store.Memo, e
 }
 
 func insertSQLiteMemo(ctx context.Context, tx dbExecutor, create *store.Memo) error {
-	fields := []string{"`uid`", "`creator_id`", "`content`", "`visibility`", "`payload`", "`space_id`"}
-	placeholder := []string{"?", "?", "?", "?", "?", "?"}
+	fields := []string{"`uid`", "`creator_id`", "`content`", "`title`", "`visibility`", "`payload`", "`space_id`", "`folder_id`"}
+	placeholder := []string{"?", "?", "?", "?", "?", "?", "?", "?"}
 	payload := "{}"
 	if create.Payload != nil {
 		payloadBytes, err := protojson.Marshal(create.Payload)
@@ -42,7 +42,7 @@ func insertSQLiteMemo(ctx context.Context, tx dbExecutor, create *store.Memo) er
 		}
 		payload = string(payloadBytes)
 	}
-	args := []any{create.UID, create.CreatorID, create.Content, create.Visibility, payload, create.SpaceID}
+	args := []any{create.UID, create.CreatorID, create.Content, create.Title, create.Visibility, payload, create.SpaceID, create.FolderID}
 
 	// Add custom timestamps if provided
 	if create.CreatedTs != 0 {
@@ -157,6 +157,12 @@ func (d *DB) ListMemos(ctx context.Context, find *store.FindMemo) ([]*store.Memo
 	if v := find.RowStatus; v != nil {
 		where, args = append(where, "`memo`.`row_status` = ?"), append(args, *v)
 	}
+	if v := find.FolderID; v != nil {
+		where, args = append(where, "`memo`.`folder_id` = ?"), append(args, *v)
+	}
+	if find.TitleSearch != "" {
+		where, args = append(where, "`memo`.`title` LIKE ?"), append(args, "%"+find.TitleSearch+"%")
+	}
 	if v := find.VisibilityList; len(v) != 0 {
 		placeholder := []string{}
 		for _, visibility := range v {
@@ -205,10 +211,12 @@ func (d *DB) ListMemos(ctx context.Context, find *store.FindMemo) ([]*store.Memo
 		"`memo`.`created_ts` AS `created_ts`",
 		"`memo`.`updated_ts` AS `updated_ts`",
 		"`memo`.`row_status` AS `row_status`",
+		"`memo`.`title` AS `title`",
 		"`memo`.`visibility` AS `visibility`",
 		"`memo`.`pinned` AS `pinned`",
 		"`memo`.`payload` AS `payload`",
 		"`memo`.`space_id` AS `space_id`",
+		"`memo`.`folder_id` AS `folder_id`",
 		`(SELECT parent_memo.uid
 			FROM memo_relation AS parent_relation
 			JOIN memo AS parent_memo ON parent_memo.id = parent_relation.related_memo_id
@@ -222,6 +230,7 @@ func (d *DB) ListMemos(ctx context.Context, find *store.FindMemo) ([]*store.Memo
 	query := "SELECT " + strings.Join(fields, ", ") + " FROM `memo` " +
 		"LEFT JOIN `user` AS `memo_creator` ON `memo`.`creator_id` = `memo_creator`.`id` " +
 		"LEFT JOIN `space` AS `memo_space` ON `memo`.`space_id` = `memo_space`.`id` " +
+		"LEFT JOIN `folder` AS `memo_folder` ON `memo`.`folder_id` = `memo_folder`.`id` " +
 		"WHERE " + strings.Join(where, " AND ") + " " +
 		"ORDER BY " + strings.Join(orderBy, ", ")
 	if find.Limit != nil {
@@ -248,10 +257,12 @@ func (d *DB) ListMemos(ctx context.Context, find *store.FindMemo) ([]*store.Memo
 			&memo.CreatedTs,
 			&memo.UpdatedTs,
 			&memo.RowStatus,
+			&memo.Title,
 			&memo.Visibility,
 			&memo.Pinned,
 			&payloadBytes,
 			&memo.SpaceID,
+			&memo.FolderID,
 			&memo.ParentUID,
 		}
 		if !find.ExcludeContent {

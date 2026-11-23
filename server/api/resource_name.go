@@ -30,6 +30,7 @@ const (
 	SpaceNamePrefix            = "spaces/"
 	SpaceMemberNamePrefix      = "members/"
 	SpaceInvitationNamePrefix  = "invitations/"
+	FolderNamePrefix           = "folders/"
 )
 
 // GetNameParentTokens returns the tokens from a resource name.
@@ -126,6 +127,15 @@ func ExtractSpaceInvitationTokensFromName(name string) (string, string, error) {
 		return "", "", err
 	}
 	return tokens[0], tokens[1], nil
+}
+
+// ExtractFolderUIDFromName returns the UID from a Folder resource name.
+func ExtractFolderUIDFromName(name string) (string, error) {
+	tokens, err := GetNameParentTokens(name, FolderNamePrefix)
+	if err != nil {
+		return "", err
+	}
+	return tokens[0], nil
 }
 
 // ExtractAttachmentUIDFromName returns the attachment UID from a resource name.

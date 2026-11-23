@@ -225,6 +225,7 @@
     "sign-up": "Sign up",
     "statistics": "Statistics",
     "tags": "Tags",
+    "folders": "Folders",
     "title": "Title",
     "today": "Today",
     "tree-mode": "Show as tree",
@@ -260,10 +261,30 @@
   "locale-picker": {
     "no-language-feedback": "Language not found? Submit feedback"
   },
+  "folder": {
+    "all": "All memos",
+    "none": "No folder",
+    "new": "New folder",
+    "new-subfolder": "New subfolder",
+    "rename": "Rename folder",
+    "rename-success": "Folder renamed",
+    "create-success": "Folder created",
+    "save-error": "Could not save the folder",
+    "delete-error": "Could not delete the folder",
+    "delete-title": "Delete this folder?",
+    "delete-description": "Memos in \"{{name}}\" and its subfolders are kept and moved out of the folder.",
+    "name": "Name",
+    "name-placeholder": "Folder name",
+    "empty": "No folders yet",
+    "load-error": "Could not load folders",
+    "loading": "Loading folders…"
+  },
   "editor": {
     "suggestions": "Suggestions",
     "add-your-comment-here": "Add your comment here...",
     "any-thoughts": "Any thoughts...",
+    "title-placeholder": "Title (optional)",
+    "folder": "Folder",
     "exit-focus-mode": "Exit Focus Mode",
     "focus-mode": "Focus Mode",
     "markdown-mode": "Markdown mode",

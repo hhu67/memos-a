@@ -44,8 +44,19 @@ func (s *APIService) convertMemoFromStoreWithCreators(ctx context.Context, memo 
 		CreateTime: timestamppb.New(time.Unix(memo.CreatedTs, 0)),
 		UpdateTime: timestamppb.New(time.Unix(memo.UpdatedTs, 0)),
 		Content:    memo.Content,
+		Title:      memo.Title,
 		Visibility: convertVisibilityFromStore(memo.Visibility),
 		Pinned:     memo.Pinned,
+	}
+	if memo.FolderID != nil {
+		folder, err := s.Store.GetFolder(ctx, &store.FindFolder{ID: memo.FolderID})
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to get memo folder")
+		}
+		if folder != nil {
+			folderName := buildFolderName(folder.UID)
+			memoMessage.Folder = &folderName
+		}
 	}
 	// An assigned memo needs a read context for its placement projection; an
 	// unassigned memo needs none.

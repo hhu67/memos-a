@@ -62,6 +62,7 @@ type APIService struct {
 	apipb.UnimplementedAuthServiceServer
 	apipb.UnimplementedUserServiceServer
 	apipb.UnimplementedMemoServiceServer
+	apipb.UnimplementedFolderServiceServer
 	apipb.UnimplementedSpaceServiceServer
 	apipb.UnimplementedAttachmentServiceServer
 	apipb.UnimplementedAIServiceServer
@@ -203,6 +204,9 @@ func (s *APIService) NewHandler(ctx context.Context) (http.Handler, error) {
 		return nil, err
 	}
 	if err := apipb.RegisterMemoServiceHandlerServer(ctx, gwMux, s); err != nil {
+		return nil, err
+	}
+	if err := apipb.RegisterFolderServiceHandlerServer(ctx, gwMux, s); err != nil {
 		return nil, err
 	}
 	if err := apipb.RegisterSpaceServiceHandlerServer(ctx, gwMux, s); err != nil {

@@ -118,6 +118,14 @@ func NewSchema() Schema {
 			SupportsContains: true,
 			Expressions:      map[DialectName]string{},
 		},
+		"title": {
+			Name:             "title",
+			Kind:             FieldKindScalar,
+			Type:             FieldTypeString,
+			Column:           Column{Table: "memo", Name: "title"},
+			SupportsContains: true,
+			Expressions:      map[DialectName]string{},
+		},
 		"creator": {
 			Name:   "creator",
 			Kind:   FieldKindScalar,
@@ -201,6 +209,20 @@ func NewSchema() Schema {
 				DialectSQLite:   "CASE WHEN `memo`.`space_id` IS NULL THEN NULL WHEN %[1]s IS NULL THEN '' ELSE ('spaces/' || %[1]s) END",
 				DialectMySQL:    "CASE WHEN `memo`.`space_id` IS NULL THEN NULL WHEN %[1]s IS NULL THEN '' ELSE CONCAT('spaces/', %[1]s) END",
 				DialectPostgres: "CASE WHEN memo.space_id IS NULL THEN NULL WHEN %[1]s IS NULL THEN '' ELSE ('spaces/' || %[1]s) END",
+			},
+			AllowedComparisonOps: map[ComparisonOperator]bool{
+				CompareEq: true,
+			},
+		},
+		"folder": {
+			Name:   "folder",
+			Kind:   FieldKindScalar,
+			Type:   FieldTypeString,
+			Column: Column{Table: "memo_folder", Name: "uid"},
+			Expressions: map[DialectName]string{
+				DialectSQLite:   "CASE WHEN `memo`.`folder_id` IS NULL THEN NULL WHEN %[1]s IS NULL THEN '' ELSE ('folders/' || %[1]s) END",
+				DialectMySQL:    "CASE WHEN `memo`.`folder_id` IS NULL THEN NULL WHEN %[1]s IS NULL THEN '' ELSE CONCAT('folders/', %[1]s) END",
+				DialectPostgres: "CASE WHEN memo.folder_id IS NULL THEN NULL WHEN %[1]s IS NULL THEN '' ELSE ('folders/' || %[1]s) END",
 			},
 			AllowedComparisonOps: map[ComparisonOperator]bool{
 				CompareEq: true,
@@ -327,6 +349,9 @@ func NewSchema() Schema {
 		cel.Variable("visibility", cel.StringType),
 		// Dyn permits the explicit null comparison used for memos without a space.
 		cel.Variable("space", cel.DynType),
+		// Dyn permits the explicit null comparison used for memos without a folder.
+		cel.Variable("folder", cel.DynType),
+		cel.Variable("title", cel.StringType),
 		cel.Variable("has_task_list", cel.BoolType),
 		cel.Variable("has_link", cel.BoolType),
 		cel.Variable("has_code", cel.BoolType),

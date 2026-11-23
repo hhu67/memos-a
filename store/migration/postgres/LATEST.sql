@@ -50,6 +50,20 @@ CREATE TABLE space_member (
 
 CREATE INDEX idx_space_member_user_id ON space_member(user_id, space_id);
 
+-- folder
+CREATE TABLE folder (
+  id SERIAL PRIMARY KEY,
+  uid TEXT NOT NULL UNIQUE,
+  creator_id INTEGER NOT NULL,
+  parent_id INTEGER DEFAULT NULL,
+  name TEXT NOT NULL,
+  created_ts BIGINT NOT NULL DEFAULT EXTRACT(EPOCH FROM NOW()),
+  updated_ts BIGINT NOT NULL DEFAULT EXTRACT(EPOCH FROM NOW())
+);
+
+CREATE INDEX idx_folder_creator_id ON folder(creator_id, id);
+CREATE INDEX idx_folder_parent_id ON folder(parent_id);
+
 -- memo
 CREATE TABLE memo (
   id SERIAL PRIMARY KEY,
@@ -59,14 +73,17 @@ CREATE TABLE memo (
   updated_ts BIGINT NOT NULL DEFAULT EXTRACT(EPOCH FROM NOW()),
   row_status TEXT NOT NULL DEFAULT 'NORMAL',
   content TEXT NOT NULL,
+  title TEXT NOT NULL DEFAULT '',
   visibility TEXT NOT NULL DEFAULT 'PRIVATE',
   pinned BOOLEAN NOT NULL DEFAULT FALSE,
   payload JSONB NOT NULL DEFAULT '{}',
-  space_id INTEGER DEFAULT NULL
+  space_id INTEGER DEFAULT NULL,
+  folder_id INTEGER DEFAULT NULL
 );
 
 CREATE INDEX idx_memo_space_id ON memo(space_id, row_status, created_ts DESC, id DESC);
 CREATE INDEX idx_memo_creator_id ON memo(creator_id);
+CREATE INDEX idx_memo_folder_id ON memo(folder_id, row_status, created_ts DESC, id DESC);
 
 -- memo_relation
 CREATE TABLE memo_relation (

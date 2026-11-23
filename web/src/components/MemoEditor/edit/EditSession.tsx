@@ -10,7 +10,15 @@ import { InstanceSetting_Key } from "@/types/proto/api/instance_service_pb";
 import { useTranslate } from "@/utils/i18n";
 import { convertVisibilityFromString } from "@/utils/memo";
 
-import { AudioRecorderPanel, EditorContent, EditorMetadata, FocusModeExitButton, FocusModeOverlay, TimestampPopover } from "./components";
+import {
+  AudioRecorderPanel,
+  EditorContent,
+  EditorMetadata,
+  EditorTitle,
+  FocusModeExitButton,
+  FocusModeOverlay,
+  TimestampPopover,
+} from "./components";
 import { EditorSuggestions } from "./components/EditorSuggestions";
 import { FOCUS_MODE_STYLES } from "./constants";
 import type { EditorFileOrigin } from "./extensions";
@@ -27,7 +35,7 @@ import {
   useMemoInit,
   useMemoSave,
 } from "./hooks";
-import { canChooseSpaceFor } from "./initialState";
+import { canChooseFolderFor, canChooseSpaceFor } from "./initialState";
 import { cacheService, errorService, transcriptionService } from "./services";
 import { useEditorContext, useEditorSelector } from "./state";
 import { EditorToolbar } from "./Toolbar";
@@ -94,7 +102,9 @@ export const EditSession: React.FC<EditSessionProps> = ({
   // An edited top-level memo can change its Space; a new one can unless its
   // host fixes the target (e.g. composing inside a Space).
   const draftSpace = useEditorSelector((s) => s.metadata.space);
+  const draftFolder = useEditorSelector((s) => s.metadata.folder);
   const canChooseSpace = canChooseSpaceFor({ memo, currentUser, parentMemoName, defaultSpace });
+  const canChooseFolder = canChooseFolderFor({ memo, currentUser, parentMemoName });
   const editorSpace = memo ? draftSpace : parentMemoName ? undefined : (defaultSpace ?? draftSpace);
   const canTranscribe = useMemo(() => {
     const providerId = aiSetting.transcription?.providerId ?? "";
@@ -372,6 +382,7 @@ export const EditSession: React.FC<EditSessionProps> = ({
         )}
 
         {/* Editor content grows to fill available space in focus mode */}
+        <EditorTitle />
         <EditorContent
           ref={editorRef}
           placeholder={placeholder}
@@ -415,6 +426,9 @@ export const EditSession: React.FC<EditSessionProps> = ({
             parentMemoName={parentMemoName}
             space={editorSpace}
             canChooseSpace={canChooseSpace}
+            folder={memo ? draftFolder : parentMemoName ? undefined : draftFolder}
+            canChooseFolder={canChooseFolder}
+            onFolderChange={(folder) => dispatch(actions.setMetadata({ folder }))}
             onAudioRecorderClick={handleAudioRecorderClick}
             viewToggles={viewToggles}
             sourceMode={sourceMode}

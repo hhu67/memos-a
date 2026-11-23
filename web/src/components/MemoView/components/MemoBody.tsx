@@ -89,6 +89,11 @@ const MemoBody: React.FC<MemoBodyProps> = ({ compact, showCreator }) => {
           {/* Compact bounds the whole body — attachments included — behind one Show more.
               Reactions stay outside so they never hide under the fade. */}
           <ClampedSection enabled={Boolean(compact)}>
+            {(memo.title ?? "").trim() && (
+              <h2 data-slot="memo-title" className="w-full min-w-0 break-words mu-title text-mu-text">
+                {memo.title}
+              </h2>
+            )}
             {/* A memo of attachments alone has no text: an empty editor would still take a line and a gap. */}
             {hasText && (
               <MemoEditor

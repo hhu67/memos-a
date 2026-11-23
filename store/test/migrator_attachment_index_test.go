@@ -20,6 +20,29 @@ func attachmentLookupIndex(driver string) string {
 	return "idx_attachment_memo_id_type"
 }
 
+// revertFolderMigration returns a fresh database to the schema just before
+// 26.11.2, so an upgrade replay does not collide with objects LATEST.sql
+// already created.
+func revertFolderMigration(ctx context.Context, t *testing.T, ts *store.Store) {
+	t.Helper()
+	db := ts.GetDriver().GetDB()
+	driver := getDriverFromEnv()
+	switch driver {
+	case "mysql":
+		_, err := db.ExecContext(ctx, "DROP INDEX `idx_memo_folder_id` ON `memo`")
+		require.NoError(t, err)
+	default:
+		_, err := db.ExecContext(ctx, "DROP INDEX IF EXISTS idx_memo_folder_id")
+		require.NoError(t, err)
+	}
+	_, err := db.ExecContext(ctx, "DROP TABLE IF EXISTS folder")
+	require.NoError(t, err)
+	_, err = db.ExecContext(ctx, "ALTER TABLE memo DROP COLUMN title")
+	require.NoError(t, err)
+	_, err = db.ExecContext(ctx, "ALTER TABLE memo DROP COLUMN folder_id")
+	require.NoError(t, err)
+}
+
 // TestMigrationAttachmentIndex preserves attachment data through the index upgrade and a restart.
 func TestMigrationAttachmentIndex(t *testing.T) {
 	t.Parallel()
@@ -43,13 +66,14 @@ func TestMigrationAttachmentIndex(t *testing.T) {
 	}
 	_, err = ts.GetDriver().GetDB().ExecContext(ctx, query)
 	require.NoError(t, err)
+	revertFolderMigration(ctx, t, ts)
 	setSchemaVersion(ctx, t, ts, "26.10.1")
 	require.NoError(t, ts.Migrate(ctx))
 	requireLookupIndexes(ctx, t, ts, driver)
 	require.NoError(t, ts.Migrate(ctx), "a completed upgrade can restart")
 	setting, err := ts.GetUncachedInstanceSetting(ctx, &store.FindInstanceSetting{Name: "BASIC"})
 	require.NoError(t, err)
-	require.Equal(t, "26.11.1", setting.GetBasicSetting().SchemaVersion)
+	require.Equal(t, "26.11.2", setting.GetBasicSetting().SchemaVersion)
 	stored, err := ts.GetAttachment(ctx, &store.FindAttachment{ID: &attachment.ID, GetBlob: true})
 	require.NoError(t, err)
 	require.Equal(t, []byte("preserved blob"), stored.Blob)
@@ -77,6 +101,7 @@ func TestMigrationAttachmentLongType(t *testing.T) {
 			if upgrade {
 				_, err := ts.GetDriver().GetDB().ExecContext(ctx, "DROP INDEX "+attachmentLookupIndex("postgres"))
 				require.NoError(t, err)
+				revertFolderMigration(ctx, t, ts)
 				setSchemaVersion(ctx, t, ts, "26.10.1")
 			}
 			attachment, err := ts.CreateAttachment(ctx, &store.Attachment{UID: "long-type", CreatorID: user.ID, Type: mime.String()})

@@ -283,6 +283,18 @@ message Memo {
   // creation.
   google.protobuf.Timestamp update_time = 17 [(google.api.field_behavior) = OPTIONAL];
 
+  // Optional. A short display title. It is independent of the H1 heading in the
+  // content and may be empty.
+  string title = 18 [(google.api.field_behavior) = OPTIONAL];
+
+  // Optional. The folder the memo is filed in. Unset means the memo is not in a
+  // folder.
+  // Format: folders/{folder}
+  optional string folder = 19 [
+    (google.api.field_behavior) = OPTIONAL,
+    (google.api.resource_reference) = {type: "memos.api/Folder"}
+  ];
+
   // Property holds properties computed from the memo content.
   message Property {
     // The text of the H1 heading when it is the first block of the content.
@@ -322,6 +334,9 @@ message ListMemosRequest {
   //   visibility (string: PRIVATE | PROTECTED | PUBLIC | SPACE),
   //   space (string resource name, or null when the memo has no space;
   //     supports == and comparisons against null, e.g. space != null),
+  //   folder (string resource name, or null when the memo is not in a folder;
+  //     supports == and comparisons against null, e.g. folder == null),
+  //   title (string; supports contains, e.g. title.contains("roadmap")),
   //   tags (list<string>; match with `"work" in tags`, not `tag == "work"`),
   //   has_task_list / has_link / has_code / has_incomplete_tasks (bool),
   //   has_location (bool; true when the memo has a location attached),
@@ -390,8 +405,8 @@ message UpdateMemoRequest {
   Memo memo = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Required. The fields to update. Supported paths: content, visibility,
-  // space, pinned, state, create_time, update_time, location, attachments,
-  // relations.
+  // space, title, folder, pinned, state, create_time, update_time, location,
+  // attachments, relations.
   google.protobuf.FieldMask update_mask = 2 [(google.api.field_behavior) = REQUIRED];
 }
 

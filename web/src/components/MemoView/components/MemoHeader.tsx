@@ -18,6 +18,7 @@ import { MEMO_TIME_CONTROL_CLASSES } from "../constants";
 import { useMemoViewContext, useMemoViewDerived } from "../MemoViewContext";
 import { createMemoNavigationState, isMemoDetailPath } from "../navigation";
 import type { MemoHeaderProps } from "../types";
+import MemoFolderBadge from "./MemoFolderBadge";
 import MemoSpaceBadge from "./MemoSpaceBadge";
 
 /** The card's trailing actions are the package's 24px ghost squares (`sm`), whether or not they are package buttons. */
@@ -54,6 +55,7 @@ const MemoHeader: React.FC<MemoHeaderProps> = ({ timeDisplay = "relative", showC
         : undefined,
   };
   const spaceMetadata = showSpace && memo.space ? <MemoSpaceBadge spaceName={memo.space} /> : null;
+  const folderMetadata = memo.folder ? <MemoFolderBadge folderName={memo.folder} /> : null;
   const showsCreator = Boolean(showCreator && creator);
   const isNew = memo.name === newMemoName;
 
@@ -80,6 +82,7 @@ const MemoHeader: React.FC<MemoHeaderProps> = ({ timeDisplay = "relative", showC
             isCurrentPage={isMemoDetailPath(location.pathname, memo.name)}
           />
           {spaceMetadata}
+          {folderMetadata}
         </div>
         {isNew && <NewBadge />}
       </div>

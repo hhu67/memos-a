@@ -153,7 +153,8 @@
     "selected-location": "الموقع المحدد",
     "choose-location": "اختر موقعًا",
     "unknown-error": "خطأ غير معروف",
-    "error-occurred": "حدث خطأ"
+    "error-occurred": "حدث خطأ",
+    "folders": "Folders"
   },
   "locale-picker": {
     "no-language-feedback": "لم يتم العثور على اللغة؟ إرسال ردود الفعل"
@@ -331,7 +332,9 @@
     "remove-location": "إزالة الموقع",
     "recording-unsupported": "تسجيل الصوت غير مدعوم في هذا المتصفح.",
     "microphone-denied": "تم رفض إذن الميكروفون.",
-    "recording-failed": "فشل بدء تسجيل الصوت."
+    "recording-failed": "فشل بدء تسجيل الصوت.",
+    "title-placeholder": "Title (optional)",
+    "folder": "Folder"
   },
   "inbox": {
     "failed-to-load": "فشل تحميل عنصر صندوق الوارد",
@@ -1439,5 +1442,23 @@
     "back": "الرجوع {{seconds}} ثوانٍ",
     "forward": "التقدم {{seconds}} ثوانٍ",
     "speed": "سرعة التشغيل {{rate}}x"
+  },
+  "folder": {
+    "all": "All memos",
+    "none": "No folder",
+    "new": "New folder",
+    "new-subfolder": "New subfolder",
+    "rename": "Rename folder",
+    "rename-success": "Folder renamed",
+    "create-success": "Folder created",
+    "save-error": "Could not save the folder",
+    "delete-error": "Could not delete the folder",
+    "delete-title": "Delete this folder?",
+    "delete-description": "Memos in \"{{name}}\" and its subfolders are kept and moved out of the folder.",
+    "name": "Name",
+    "name-placeholder": "Folder name",
+    "empty": "No folders yet",
+    "load-error": "Could not load folders",
+    "loading": "Loading folders…"
   }
 }

@@ -541,6 +541,48 @@ func (s *ConnectServiceHandler) BatchGetLinkMetadata(ctx context.Context, req *c
 	return connect.NewResponse(resp), nil
 }
 
+// FolderService
+
+func (s *ConnectServiceHandler) CreateFolder(ctx context.Context, req *connect.Request[apipb.CreateFolderRequest]) (*connect.Response[apipb.Folder], error) {
+	resp, err := s.APIService.CreateFolder(ctx, req.Msg)
+	if err != nil {
+		return nil, convertGRPCError(err)
+	}
+	return connect.NewResponse(resp), nil
+}
+
+func (s *ConnectServiceHandler) ListFolders(ctx context.Context, req *connect.Request[apipb.ListFoldersRequest]) (*connect.Response[apipb.ListFoldersResponse], error) {
+	resp, err := s.APIService.ListFolders(ctx, req.Msg)
+	if err != nil {
+		return nil, convertGRPCError(err)
+	}
+	return connect.NewResponse(resp), nil
+}
+
+func (s *ConnectServiceHandler) GetFolder(ctx context.Context, req *connect.Request[apipb.GetFolderRequest]) (*connect.Response[apipb.Folder], error) {
+	resp, err := s.APIService.GetFolder(ctx, req.Msg)
+	if err != nil {
+		return nil, convertGRPCError(err)
+	}
+	return connect.NewResponse(resp), nil
+}
+
+func (s *ConnectServiceHandler) UpdateFolder(ctx context.Context, req *connect.Request[apipb.UpdateFolderRequest]) (*connect.Response[apipb.Folder], error) {
+	resp, err := s.APIService.UpdateFolder(ctx, req.Msg)
+	if err != nil {
+		return nil, convertGRPCError(err)
+	}
+	return connect.NewResponse(resp), nil
+}
+
+func (s *ConnectServiceHandler) DeleteFolder(ctx context.Context, req *connect.Request[apipb.DeleteFolderRequest]) (*connect.Response[emptypb.Empty], error) {
+	resp, err := s.APIService.DeleteFolder(ctx, req.Msg)
+	if err != nil {
+		return nil, convertGRPCError(err)
+	}
+	return connect.NewResponse(resp), nil
+}
+
 // SpaceService
 
 func (s *ConnectServiceHandler) CreateSpace(ctx context.Context, req *connect.Request[apipb.CreateSpaceRequest]) (*connect.Response[apipb.Space], error) {

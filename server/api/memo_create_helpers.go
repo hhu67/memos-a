@@ -43,6 +43,7 @@ func (s *APIService) prepareMemoCreate(ctx context.Context, user *store.User, in
 		UID:        uid,
 		CreatorID:  user.ID,
 		Content:    input.Content,
+		Title:      strings.TrimSpace(input.Title),
 		Visibility: visibility,
 	}
 	if input.Space != nil && input.GetSpace() != "" {
@@ -51,6 +52,13 @@ func (s *APIService) prepareMemoCreate(ctx context.Context, user *store.User, in
 			return nil, err
 		}
 		memo.SpaceID = &space.ID
+	}
+	if input.Folder != nil && input.GetFolder() != "" {
+		folder, err := s.resolveOwnedFolder(ctx, input.GetFolder(), user.ID)
+		if err != nil {
+			return nil, err
+		}
+		memo.FolderID = &folder.ID
 	}
 	if memo.Visibility == store.SpaceAudience && memo.SpaceID == nil {
 		return nil, status.Error(codes.InvalidArgument, "SPACE visibility requires a space")

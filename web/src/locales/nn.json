@@ -227,7 +227,8 @@
     "selected-location": "Vald stad",
     "choose-location": "Vel ein stad",
     "unknown-error": "Ukjend feil",
-    "error-occurred": "Det oppstod ein feil"
+    "error-occurred": "Det oppstod ein feil",
+    "folders": "Folders"
   },
   "demo": {
     "banner-description": "Prøv deg gjerne fram! Denne demoen vert nullstilt med jamne mellomrom.",
@@ -407,7 +408,9 @@
     "remove-location": "Fjern staden",
     "recording-unsupported": "Ljodopptak er ikkje støtta i denne nettlesaren.",
     "microphone-denied": "Tilgang til mikrofonen vart avslått.",
-    "recording-failed": "Klarte ikkje å starte ljodopptaket."
+    "recording-failed": "Klarte ikkje å starte ljodopptaket.",
+    "title-placeholder": "Title (optional)",
+    "folder": "Folder"
   },
   "inbox": {
     "failed-to-load": "Klarte diverre ikkje å laste innbokselementet",
@@ -1435,5 +1438,23 @@
     "back": "{{seconds}} sekund tilbake",
     "forward": "{{seconds}} sekund fram",
     "speed": "Avspelingsfart {{rate}}x"
+  },
+  "folder": {
+    "all": "All memos",
+    "none": "No folder",
+    "new": "New folder",
+    "new-subfolder": "New subfolder",
+    "rename": "Rename folder",
+    "rename-success": "Folder renamed",
+    "create-success": "Folder created",
+    "save-error": "Could not save the folder",
+    "delete-error": "Could not delete the folder",
+    "delete-title": "Delete this folder?",
+    "delete-description": "Memos in \"{{name}}\" and its subfolders are kept and moved out of the folder.",
+    "name": "Name",
+    "name-placeholder": "Folder name",
+    "empty": "No folders yet",
+    "load-error": "Could not load folders",
+    "loading": "Loading folders…"
   }
 }

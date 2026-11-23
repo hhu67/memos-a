@@ -224,7 +224,8 @@
     "selected-location": "המיקום שנבחר",
     "choose-location": "בחרו מיקום",
     "unknown-error": "שגיאה לא ידועה",
-    "error-occurred": "אירעה שגיאה"
+    "error-occurred": "אירעה שגיאה",
+    "folders": "Folders"
   },
   "locale-picker": {
     "no-language-feedback": "לא מצאתם את השפה? שלחו משוב"
@@ -402,7 +403,9 @@
     "remove-location": "הסרת המיקום",
     "recording-unsupported": "הקלטת שמע אינה נתמכת בדפדפן זה.",
     "microphone-denied": "הגישה למיקרופון נדחתה.",
-    "recording-failed": "הפעלת הקלטת השמע נכשלה."
+    "recording-failed": "הפעלת הקלטת השמע נכשלה.",
+    "title-placeholder": "Title (optional)",
+    "folder": "Folder"
   },
   "inbox": {
     "failed-to-load": "טעינת פריט מתיבת הדואר הנכנס נכשלה",
@@ -1435,5 +1438,23 @@
     "back": "{{seconds}} שניות אחורה",
     "forward": "{{seconds}} שניות קדימה",
     "speed": "מהירות השמעה {{rate}}x"
+  },
+  "folder": {
+    "all": "All memos",
+    "none": "No folder",
+    "new": "New folder",
+    "new-subfolder": "New subfolder",
+    "rename": "Rename folder",
+    "rename-success": "Folder renamed",
+    "create-success": "Folder created",
+    "save-error": "Could not save the folder",
+    "delete-error": "Could not delete the folder",
+    "delete-title": "Delete this folder?",
+    "delete-description": "Memos in \"{{name}}\" and its subfolders are kept and moved out of the folder.",
+    "name": "Name",
+    "name-placeholder": "Folder name",
+    "empty": "No folders yet",
+    "load-error": "Could not load folders",
+    "loading": "Loading folders…"
   }
 }

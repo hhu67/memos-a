@@ -3,5 +3,6 @@
 export * from "./AudioRecorderPanel";
 export * from "./EditorContent";
 export * from "./EditorMetadata";
+export * from "./EditorTitle";
 export { FocusModeExitButton, FocusModeOverlay } from "./FocusModeOverlay";
 export { TimestampPopover } from "./TimestampPopover";
